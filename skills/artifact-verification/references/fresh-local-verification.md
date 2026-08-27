@@ -28,6 +28,20 @@ AD_HOC_VERIFICATION {"errors": [], "status": "passed"}
 5. If the verifier itself fails, fix and rerun it. Keep harness failures separate from implementation failures.
 6. Confirm the `hermes-verify-*` temporary file is gone when feasible.
 
+## Named metrics
+
+Before tools, freeze each mandatory truth as its own metric. Prefer a code check when the claim is mechanical. Do not issue PASS while any mandatory truth is `unresolved` or `blocked`.
+
+```text
+truths:
+  - id: workers-404-runtime
+    check: runtime GET of a nested missing path returns HTTP 404 with the branded body
+    kind: code
+verdict: PASS only if all verified
+```
+
+"Looks good" and blended scores are not metrics.
+
 ## Reporting boundary
 
 Call this **ad-hoc verification**. Do not call it a canonical test/lint suite, do not claim broad visual coverage from HTTP checks, and do not report a deploy unless deployment and live verification were separately authorized and completed.
