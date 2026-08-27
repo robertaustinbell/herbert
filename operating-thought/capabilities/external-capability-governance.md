@@ -23,6 +23,7 @@ do_not_use_when:
 router_summary: Evaluate and govern external capabilities by job, authority, egress, verification, failure surface, carrying cost, and real decision value.
 decision_effect:
   - connect the minimum useful capability rather than the broadest tool surface
+  - treat a named tool as a hypothesis about the job, not the job
   - keep runtime state and tool-specific procedure out of universal operating thought
   - remove integrations that add carrying cost without changing real decisions
 implemented_by: []
@@ -34,12 +35,13 @@ known_failures:
   - enabling write or unattended execution before read-only behavior is understood
   - keeping integrations because setup effort has already been spent
   - treating trusted transport as proof that retrieved content is trusted instruction
+  - optimizing the named tool when a different capability, source, or no new tool better serves the job
 review_when:
   - an integration creates an unauthorized mutation, egress path, charge, or commitment
   - repeated real use shows no material decision effect
   - configuration, provider behavior, or tool surface changes materially
   - carrying cost, noise, privacy exposure, or routing confusion exceeds value
-last_material_revision: 2026-08-08
+last_material_revision: 2026-08-27
 ---
 
 # External Capability Governance
@@ -65,6 +67,8 @@ Start with:
 - cost of carrying the integration if it succeeds.
 
 Do not begin with “What can this server do?” and then invent reasons to use every discovered tool.
+
+The tool the principal named is a hypothesis about the job, not the job. If a different capability, source, or no new tool better serves the stated outcome, say so before connecting, installing, or optimizing the named instrument.
 
 ## Capability classification
 

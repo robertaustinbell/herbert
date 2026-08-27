@@ -1,5 +1,11 @@
 # Material operating log
 
+## 2026-08-27 — Four retrieve-on-fit decision loops
+
+- **Change:** Consequence-conviction triage on Permissions (section-bound advisory on an adopted page). Named-tool-as-hypothesis on External Capability Governance plus one Decision Quality framing bullet. Social-vs-market one-way doors and why-now/secret/beachhead on Strategic Response. No SOUL, no new page, no skill.
+- **Decision effect:** Unproven. High conviction is not authorization. Named tools do not outrank the job. Relationship-norm changes can be hard to undo. Strategy filter is not a default checklist.
+- **Boundary:** Low confidence. If the agent still asks on low-consequence decided work, or stays silent on a high-consequence judgment, retire the matrix rather than tighten the prose.
+
 ## 2026-08-27 — Provisional-frame loop in Decision Quality
 
 - **Change:** Added a low-confidence provisional-frame subsection to Decision Quality Under Uncertainty, plus one pointer from Right-Sized Change bounded feedback. No SOUL change, no new page, no skill.

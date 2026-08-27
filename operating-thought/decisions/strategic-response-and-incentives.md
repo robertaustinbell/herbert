@@ -9,6 +9,7 @@ confidence_basis:
   - Two provisional worked cases changed recommendations in materially different domains.
   - Those cases support usefulness within scope but do not establish universal validity or calibration.
   - Strategic models remain especially vulnerable to omitted actors, misspecified payoffs, and unjustified suspicion.
+  - The relationship-norm and why-now/secret/beachhead loops are low-confidence transfers with no recorded production decision effect.
 scope:
   - decisions where other actors' private information, incentives, commitments, selection, enforcement, or likely responses materially change the move
 consult_when:
@@ -27,6 +28,8 @@ decision_effect:
   - choose moves that remain strong after plausible responses
   - distinguish credible commitments and selection effects from cheap talk or naive averages
   - judge stable systems separately from whether they deserve approval
+  - treat a shift between social and market norms as potentially irreversible before recommending price, gift, or exception terms
+  - use why-now, secret, and beachhead only on strategy or public-bet choices, not ordinary execution
 implemented_by: []
 lineage: LINEAGE.md
 known_failures:
@@ -35,12 +38,14 @@ known_failures:
   - treating an equilibrium as fair, desirable, or inevitable
   - using incentives as permission to manipulate or conceal material information
   - assuming more network participants always increase value
+  - treating a one-off price, gift, or exception as costless when it retrains the relationship norm
+  - running a why-now/secret/beachhead filter on already-scoped execution
 review_when:
   - a worked case shows the lens changed the move in the wrong direction
   - repeated use adds suspicion or complexity without improving recommendations
   - new evidence contradicts the assumed actors, options, payoffs, information, or response sequence
   - an important strategic class repeatedly produces no distinct decision effect
-last_material_revision: 2026-07-31
+last_material_revision: 2026-08-27
 ---
 
 # Strategic Response and Incentives
@@ -78,6 +83,33 @@ First consider:
 - differing but sincerely held objectives.
 
 Hanlon's Razor is a starting hypothesis, not an excuse to ignore evidence of deliberate behavior. Escalate the strategic model when response, concealment, commitment, selection, or enforcement has observable decision effect.
+
+### Relationship-norm changes can be one-way doors
+
+**Confidence: low.** No recorded production decision effect.
+
+Pricing, gifts, household help, and client terms can move a relationship from social norms (reciprocity, loyalty, informal help) to market norms (invoice, rate, scope), or the reverse. That move can be hard to undo even if the cash effect is small.
+
+Before recommending a price, discount, gift, "just this once," or unpaid extra:
+
+- name the current norm;
+- name the norm the change would teach;
+- say whether reversal is realistic;
+- do not treat a one-off exception as costless if it retrains expectations.
+
+**Do not use when:** the term is already market-framed and the change is ordinary rate or scope math; or the situation is a clear standing money, calendar, or identity-bearing send policy.
+
+### Why now, secret, beachhead
+
+**Confidence: low.** Use only when the principal is choosing a strategy, market, or public bet, not for ordinary execution.
+
+Ask, then stop if the answers cannot change the move:
+
+1. **Why now:** what changed that makes this the time, and what happens if we wait.
+2. **Secret:** what we believe that the obvious competitor or default path does not act on. A slogan is not a secret.
+3. **Beachhead:** the smallest winnable beach where the secret matters, not the largest imagined market.
+
+**Do not use when:** the task is already scoped; the "secret" is a preference with no test; or the filter would delay a reversible probe that is itself the test.
 
 ## Model the structure
 

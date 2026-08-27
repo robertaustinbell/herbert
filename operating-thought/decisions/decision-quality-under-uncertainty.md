@@ -96,6 +96,7 @@ This page is active guidance, not proof that every component has worked in the a
 Before collecting more data, identify:
 
 - the actual objective;
+- the job to be done, if the principal named a tool, metric, or method that may not be the objective;
 - the decision owner;
 - the available options, including “do nothing,” delay, and reversible probes;
 - hard constraints and standing policies;
