@@ -66,6 +66,7 @@ known_failures:
   - forecasting at a convenient component or aggregate level without checking whether cross-boundary interactions, omitted detail, or a scale-dependent change in effective behavior can alter the target or decision over the declared horizon
   - treating a selected threshold-crossing result as the evidence while hiding the search family, effect magnitude, uncertainty, detection capability, or failed and untouched tests
   - anchoring on the first candidate, treating reaction to a prototype as evidence about the eventual system, or calling every hard problem wicked
+  - reframing a values or authority dispute as if it were an undefined problem
   - using "no stopping rule" to evade budgets, authority, or acceptance conditions
 review_when:
   - a real application produces a materially worse decision than a simpler approach
@@ -134,9 +135,9 @@ A sketch, scenario, mockup, or spike earns its keep when it exposes an actor, co
 
 A frame is not a neutral description. It changes what evidence is sought, which parties count, which options appear, and which effects become visible. Selecting the objective, constraints, boundaries, and performance measure is often the consequential decision; optimizing inside that model is downstream.
 
-**Do not use when:** a current source already answers the question; the work is mechanical and already decided; the problem has objective tests and a stable formulation; or this loop would add ceremony without changing the move.
+**Do not use when:** a current source already answers the question; the work is mechanical and already decided; the problem has objective tests and a stable formulation; the deadlock is a values or authority dispute among decision owners, not an underdefined problem (use the value-sensitive boundary instead); or this loop would add ceremony without changing the move.
 
-**Failure modes:** anchoring on the first candidate; treating reaction to a prototype as evidence about the eventual system; calling every hard problem wicked; using "no stopping rule" to evade budgets, authority, or acceptance conditions; adopting a frame whose implementation demands large changes from people who receive little benefit.
+**Failure modes:** anchoring on the first candidate; treating reaction to a prototype as evidence about the eventual system; calling every hard problem wicked; using "no stopping rule" to evade budgets, authority, or acceptance conditions; adopting a frame whose implementation demands large changes from people who receive little benefit; reframing a values dispute as if it were an undefined problem.
 
 ## 2. Map evidence and provenance
 

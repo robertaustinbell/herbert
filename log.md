@@ -1,5 +1,10 @@
 # Material operating log
 
+## 2026-08-27 — Provisional-frame skip for values disputes
+
+- **Change:** Decision Quality provisional-frame "Do not use when" and failure modes now send values/authority disputes to the value-sensitive boundary. No strategy-loop pointer.
+- **Decision effect:** Unproven. A second frame must not stand in for an authorized choice among contested goals.
+
 ## 2026-08-27 — Four retrieve-on-fit decision loops
 
 - **Change:** Consequence-conviction triage on Permissions (section-bound advisory on an adopted page). Named-tool-as-hypothesis on External Capability Governance plus one Decision Quality framing bullet. Social-vs-market one-way doors and why-now/secret/beachhead on Strategic Response. No SOUL, no new page, no skill.
