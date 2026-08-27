@@ -147,6 +147,8 @@ Prefer the smallest useful reversible step, observe the result, and adapt. Do no
 
 When an intervention misses, preserve the smallest residual question, missing measurement, or site-specific condition that would distinguish a bad model from bad execution. Do not convert one failed application into a universal rejection or an excuse for broad enrichment.
 
+When the miss is that the problem itself is still undefined, use the provisional-frame loop in Decision Quality rather than another implementation step.
+
 ### Common loop failures
 
 - optimizing a proxy rather than the objective;

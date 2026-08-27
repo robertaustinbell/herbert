@@ -17,6 +17,7 @@ confidence_basis:
   - The situational-awareness failure taxonomy is an operational extrapolation; adopters should judge it by changed decisions or repairs rather than conceptual neatness.
   - Value-sensitive comparison guidance is a bounded operational synthesis of contested theories. It does not establish a universal value theory or a master value.
   - Marginal-economics, present-choice replacement, and disconfirming-evidence disposition guidance are bounded operational translations from a [fully reviewed 2020 investment and lifelong-learning text](../../evidence/sources/joys-of-compounding-baid-2020.md); transfer beyond its source domain and distinct production value remain unestablished.
+  - The provisional-frame loop is a low-confidence synthesis from fully reviewed design and planning sources; it has no recorded production decision effect.
   - Local value must be judged by whether the page changes consequential decisions without adding disproportionate ceremony.
 scope:
   - consequential decisions with uncertain framing, evidence, models, estimates, causal claims, or tradeoffs
@@ -28,6 +29,7 @@ consult_when:
   - current state may change during the task, several observations must be integrated, or a near-future projection materially determines the move
   - downside, irreversibility, opportunity cost, or update timing is material
   - an argument's validity depends on representation, quantifiers, identity, relation direction, scoped assumptions, or multi-step derivation
+  - a consequential problem remains underdefined after ordinary framing, or repeated analysis returns the same deadlock
 do_not_use_when:
   - an authoritative source directly answers a low-stakes factual question
   - the task is mechanical and already decided
@@ -40,6 +42,7 @@ do_not_use_when:
 router_summary: Test framing, values, preference authority, evidence, inference, causal stories, models, alternatives, and stopping points in consequential decisions.
 decision_effect:
   - choose the right question and model before optimizing inside them
+  - use a disposable conjecture and a second frame when ordinary analysis cannot establish the problem; rank unfinished branches by search value and completed solutions by outcome value
   - distinguish component failure from outcomes produced by interaction topology, update dynamics, sequencing, or feedback before selecting an intervention
   - earn precision from evidence rather than hiding uncertainty in numbers
   - distinguish unstable detailed trajectories from stable ranges, regimes, structural properties, or decisions, and state the level at which each claim holds, before declaring a model predictive or useless
@@ -62,6 +65,8 @@ known_failures:
   - invoking chaos, sensitivity, or emergence from unpredictability alone without evidence that the proposed dynamics or prediction target fit the system
   - forecasting at a convenient component or aggregate level without checking whether cross-boundary interactions, omitted detail, or a scale-dependent change in effective behavior can alter the target or decision over the declared horizon
   - treating a selected threshold-crossing result as the evidence while hiding the search family, effect magnitude, uncertainty, detection capability, or failed and untouched tests
+  - anchoring on the first candidate, treating reaction to a prototype as evidence about the eventual system, or calling every hard problem wicked
+  - using "no stopping rule" to evade budgets, authority, or acceptance conditions
 review_when:
   - a real application produces a materially worse decision than a simpler approach
   - repeated retrieval adds ceremony without changing the recommendation
@@ -74,7 +79,8 @@ review_when:
   - the forecast-horizon diagnostic repeatedly restates ordinary sensitivity analysis without changing target, horizon, action, verification, or uncertainty reporting
   - the statistical-evidence gate repeatedly adds terminology without changing an estimate, evaluation design, recommendation, abstention, verification, or repair
   - a declared trajectory limitation is used to excuse a model that fails its predeclared range, regime, structural, distributional, or decision-level prediction
-last_material_revision: 2026-08-15
+  - the provisional-frame loop repeatedly adds ceremony without changing the recommendation, or is applied to mechanical or already-defined work
+last_material_revision: 2026-08-27
 ---
 
 # Decision Quality Under Uncertainty
@@ -112,6 +118,24 @@ Challenge the framing when it is load-bearing. Steelman the reasonable interpret
 - **Decision-owner blur:** solving for the agent's preference instead of the principal's choice.
 - **Time-horizon mismatch:** a short-term win creates a larger later constraint.
 - **False binary:** uncertainty or omitted options are hidden by two crisp choices.
+
+### Provisional frames when the problem will not settle
+
+Use this only when a consequential problem remains underdefined after ordinary framing, or repeated analysis returns the same deadlock. It is not a default design method.
+
+1. State a provisional frame: whose problem, what discrepancy, which causal level, and what would count as better.
+2. Build the cheapest representation or candidate that can expose constraints. Continue that branch only while further work has expected search value: it is likely to reveal information or improve the design. Do not score an unfinished path as if it were a completed solution.
+3. Compare at least one materially different frame. Do not treat the first attractive candidate as proof.
+4. After the probe, record what it revealed about the problem, constraints, affected people, and success definition. Revise the problem and the candidate together.
+5. Judge a completed solution independently by outcome, effects, evidence, and acceptance conditions.
+
+A sketch, scenario, mockup, or spike earns its keep when it exposes an actor, constraint, mechanism, alternative, disagreement, or test that prose did not. Otherwise it is decoration.
+
+A frame is not a neutral description. It changes what evidence is sought, which parties count, which options appear, and which effects become visible. Selecting the objective, constraints, boundaries, and performance measure is often the consequential decision; optimizing inside that model is downstream.
+
+**Do not use when:** a current source already answers the question; the work is mechanical and already decided; the problem has objective tests and a stable formulation; or this loop would add ceremony without changing the move.
+
+**Failure modes:** anchoring on the first candidate; treating reaction to a prototype as evidence about the eventual system; calling every hard problem wicked; using "no stopping rule" to evade budgets, authority, or acceptance conditions; adopting a frame whose implementation demands large changes from people who receive little benefit.
 
 ## 2. Map evidence and provenance
 

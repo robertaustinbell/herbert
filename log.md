@@ -1,5 +1,11 @@
 # Material operating log
 
+## 2026-08-27 — Provisional-frame loop in Decision Quality
+
+- **Change:** Added a low-confidence provisional-frame subsection to Decision Quality Under Uncertainty, plus one pointer from Right-Sized Change bounded feedback. No SOUL change, no new page, no skill.
+- **Decision effect:** Unproven. Use a disposable conjecture and a second frame when ordinary analysis cannot establish the problem; rank unfinished branches by search value and completed solutions by outcome value. Filing is not demonstrated usefulness.
+- **Boundary:** Advisory. Rejects treating every hard problem as wicked, using "no stopping rule" to evade budgets or acceptance conditions, and design-thinking as identity.
+
 ## 2026-08-21 — Separated four consequential-action control layers
 
 - **Repair:** the authority owner now evaluates admission, execution containment, provenance, and observed effect as separate layers and states that no evidence or control in one establishes another.
