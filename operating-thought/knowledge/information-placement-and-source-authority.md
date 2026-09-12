@@ -39,6 +39,7 @@ known_failures:
   - preserving a correction as another entry rather than updating the stale record
   - treating fluent reconstruction, compression ratio, retrieval similarity, confidence, or information quantity as proof that a representation preserved what mattered
   - stripping provenance until quoted source instructions appear to be task instructions or durable control state
+  - citing an open concern as a resolved finding, or merging two separately counted states into one number
 review_when:
   - a new domain lacks a named source of record
   - two current canonical systems legitimately govern different dimensions of the same claim
@@ -46,7 +47,7 @@ review_when:
   - an ownership or identity error escapes into advice or external communication
   - representation-adequacy checks repeatedly add context or ceremony without changing a consequential conclusion, verification result, or repair
   - transfer-risk analysis suppresses material truth, adds routine ceremony, or fails to prevent a consequential aggregation, attention, template, signaling, presentation, or retention effect
-last_material_revision: 2026-08-08
+last_material_revision: 2026-09-12
 ---
 
 # Information Placement and Source Authority
@@ -84,6 +85,10 @@ Repeatable operational steps. Procedures belong in skills and must be verified a
 ### Evidence
 
 A preserved source, worked case, or observation. Evidence can support or falsify operating thought but does not govern merely by existing.
+
+### Concern versus finding
+
+An open concern and a resolved finding are different claims with different owners. A concern goes to a watchlist with its evidence attached; a finding goes to a track owner with reproducible refs and limits. Never render the two counts as one number, and never let a consumer-side summary move authority away from the contribution that carries the evidence.
 
 ### Historical material
 

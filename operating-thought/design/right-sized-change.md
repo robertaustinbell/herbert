@@ -29,6 +29,7 @@ decision_effect:
   - time repeated correction to observable system response rather than stale state
   - test whether individually tolerable impediments can interact or compound before detection
   - optimize for the next safe change rather than elegance without operational value
+  - merge duplicate observations under one canonical item and split bundled claims into separately owned pieces
 implemented_by: []
 lineage: LINEAGE.md
 known_failures:
@@ -46,7 +47,7 @@ review_when:
   - carrying cost exceeds the value of optionality or redundancy
   - the operational-friction check adds pessimistic enumeration without changing design, rehearsal, recovery, or verification
   - a removed component reveals a load-bearing function that was not understood
-last_material_revision: 2026-08-07
+last_material_revision: 2026-09-12
 ---
 
 # Right-Sized Change
@@ -282,6 +283,8 @@ Before a material change:
 - **Stable-is-good error:** persistence becomes endorsement.
 - **Scale romanticism:** growth is assumed to create value without governance.
 - **Critical-path neglect:** easy parallel work consumes attention while the bottleneck waits.
+- **Duplicate findings:** two reports of one observation kept as separate findings instead of one canonical item plus a pointer.
+- **Bundled claims:** separable issues filed as one claim with one owner instead of split pieces.
 
 ## Stop conditions
 

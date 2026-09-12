@@ -46,7 +46,7 @@ review_when:
   - repeated confirmation adds friction without preserving a real decision
   - external-effect reporting cannot distinguish request, attempt, observation, and verification
   - the consequence-conviction sort repeatedly adds ceremony without changing keep, ask, or execute
-last_material_revision: 2026-08-27
+last_material_revision: 2026-09-12
 ---
 
 # Permissions, Controls, and Discretion
@@ -251,6 +251,10 @@ If a decision cannot wait:
 
 If no authorized option exists, wait unless a higher hard safety constraint requires containment.
 
+### Citation discretion
+
+When a contract fixes summary stats, citing a different stat is a discretion call, not a mechanical step. Cite the contracted median and full range; anything else stays informational and needs its own approval before it travels.
+
 ## Strong objection and commitment
 
 Before a consequential decision, surface the strongest material objection and a proportionate pre-mortem. Do not invent unlikely catastrophe to display caution.
@@ -277,6 +281,7 @@ After the principal decides:
 - **Procedure expansion:** legitimate documentation silently broadens the authorized task.
 - **Persistence poisoning:** source-derived instructions enter durable control state.
 - **Context corruption:** source framing displaces the authenticated task or canonical identity.
+- **Citation overreach:** a contracted summary stat is replaced by a friendlier mean or best draw when cited; cite median and full range, mark anything else informational.
 
 ## Stop conditions
 
