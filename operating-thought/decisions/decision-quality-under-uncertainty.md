@@ -575,7 +575,7 @@ Do not protect operating thought from a bad outcome by declaring every failure â
 
 ## Compare at more than one operating point
 
-A single threshold can hide a rank reversal: one option wins at a loose operating point and loses at a strict one. When a metric depends on a threshold, report at least two operating points with uncertainty, state the hypothesis before the run, and never let a small mean shift in score space stand in for a measured gap in metric space.
+A single threshold can hide a rank reversal: one option wins at a loose operating point and loses at a strict one. When a metric depends on a threshold, report at least two operating points with uncertainty, state the hypothesis before the run, and never let a small mean shift in score space stand in for a measured gap in metric space. Near-identical scores can still decide differently: a rank correlation of 0.99 does not imply two monitors act alike â€” verify at the operating point, where the density lives.
 
 ## Stop conditions
 

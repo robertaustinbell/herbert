@@ -88,7 +88,7 @@ A preserved source, worked case, or observation. Evidence can support or falsify
 
 ### Concern versus finding
 
-An open concern and a resolved finding are different claims with different owners. A concern goes to a watchlist with its evidence attached; a finding goes to a track owner with reproducible refs and limits. Never render the two counts as one number, and never let a consumer-side summary move authority away from the contribution that carries the evidence.
+An open concern and a resolved finding are different claims with different owners. A concern goes to a watchlist with its evidence attached; a finding goes to a track owner with reproducible refs and limits. An independent reproduction that matches every number can still add boundary precision — expect cutoffs and threshold placement from the second pair of eyes, not just confirmation. Never render the two counts as one number, and never let a consumer-side summary move authority away from the contribution that carries the evidence.
 
 ### Historical material
 
