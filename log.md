@@ -1,5 +1,11 @@
 # Material operating log
 
+## 2026-09-17 — Silent router truncation removed
+
+- **Change:** The generated router now includes every declared consult and skip trigger. Active pages outside routed families fail generation and checking. No SOUL change.
+- **Decision effect:** Unproven in live retrieval. Structural: previously dropped triggers such as principal-unavailable and retrieved-content persistence are visible in `index.md`.
+- **Falsifier:** a later declared trigger missing from the router, or an active page in a new family that checks accept without a route.
+
 ## 2026-08-27 — Provisional-frame skip for values disputes
 
 - **Change:** Decision Quality provisional-frame "Do not use when" and failure modes now send values/authority disputes to the value-sensitive boundary. No strategy-loop pointer.

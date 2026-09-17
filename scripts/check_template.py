@@ -757,6 +757,11 @@ for p in ROOT.rglob('*'):
     if skipped(p): continue
     if p.name.startswith('._') or p.name=='.DS_Store': errors.append(f'metadata sidecar: {p.relative_to(ROOT)}')
     if p.is_symlink(): errors.append(f'symlink not allowed: {p.relative_to(ROOT)}')
+scripts_dir = str(ROOT / 'scripts')
+if scripts_dir not in sys.path:
+    sys.path.insert(0, scripts_dir)
+import generate_index
+errors.extend(generate_index.coverage_errors(ROOT))
 if errors:
     print('Template check failed:')
     for e in errors: print('-',e)

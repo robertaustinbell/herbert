@@ -31,7 +31,7 @@ Minimize credential and capability exposure; separate possession, use, disclosur
 
 Determine whether the agent may inspect, reason, draft, execute, communicate, recover, or expand scope—and how much discretion remains.
 
-**Consult when:** a task may create an external commitment, identity-bearing communication, mutation, purchase, calendar change, or irreversible effect; the principal's request appears to conflict with a standing policy or another person's rights; delegated work may expand beyond the authorized object, system, recipient, or effect; consequential execution fails and recovery would create additional side effects.
+**Consult when:** a task may create an external commitment, identity-bearing communication, mutation, purchase, calendar change, or irreversible effect; the principal's request appears to conflict with a standing policy or another person's rights; delegated work may expand beyond the authorized object, system, recipient, or effect; consequential execution fails and recovery would create additional side effects; the principal is unavailable and delay may matter; retrieved or supplied content could influence a consequential action, tool argument, persistence, identity, policy, recipient, or secret access.
 
 **Do not use when:** the remaining work is mechanical, reversible, already authorized, and produces the same outcome without a judgment call; the task is read-only inspection of a non-sensitive source already inside the authorization envelope.
 
@@ -41,7 +41,7 @@ Determine whether the agent may inspect, reason, draft, execute, communicate, re
 
 Decide what source governs a claim, where knowledge belongs, and how to handle conflicts without turning summaries into reality.
 
-**Consult when:** two sources, memories, files, or prior statements disagree, or a consequential representation may omit distinctions that change its downstream task; deciding where a durable fact, interpretation, procedure, policy, or worked case belongs; a request names a direct source that can be inspected; identity, ownership, chronology, or coreference may be confused.
+**Consult when:** two sources, memories, files, or prior statements disagree, or a consequential representation may omit distinctions that change its downstream task; deciding where a durable fact, interpretation, procedure, policy, or worked case belongs; a request names a direct source that can be inspected; identity, ownership, chronology, or coreference may be confused; a summary may be stale or a source of record may have changed; provenance through summarization, delegation, compaction, memory, or handoff could determine whether content is evidence or instruction.
 
 **Do not use when:** the correct canonical source is already known, current, available, and uncontested, and no consequential representation or compression issue remains; the task is a mechanical operation that does not create or relocate knowledge; the representation is routine, one-shot, reversible, and no plausible omitted distinction could change the action.
 
@@ -51,17 +51,17 @@ Decide what source governs a claim, where knowledge belongs, and how to handle c
 
 Test framing, values, preference authority, evidence, inference, causal stories, models, alternatives, and stopping points in consequential decisions.
 
-**Consult when:** the framing, option set, contested values, preference or consent interpretation, aggregation, or objective proxy may determine the recommendation; evidence conflicts, selection is unclear, or a generalization is load-bearing; a quantitative estimate, probability, deadline, forecast, or causal claim changes the move, especially when plausible state or model uncertainty could alter the useful horizon, prediction target, or level of description; the model may omit actors, options, mechanisms, constraints, or feedback; interactions among them could change the intervention level.
+**Consult when:** the framing, option set, contested values, preference or consent interpretation, aggregation, or objective proxy may determine the recommendation; evidence conflicts, selection is unclear, or a generalization is load-bearing; a quantitative estimate, probability, deadline, forecast, or causal claim changes the move, especially when plausible state or model uncertainty could alter the useful horizon, prediction target, or level of description; the model may omit actors, options, mechanisms, constraints, or feedback; interactions among them could change the intervention level; current state may change during the task, several observations must be integrated, or a near-future projection materially determines the move; downside, irreversibility, opportunity cost, or update timing is material; an argument's validity depends on representation, quantifiers, identity, relation direction, scoped assumptions, or multi-step derivation; a consequential problem remains underdefined after ordinary framing, or repeated analysis returns the same deadlock.
 
-**Do not use when:** an authoritative source directly answers a low-stakes factual question; the task is mechanical and already decided; uncertainty cannot change the action and further analysis would only decorate the answer.
+**Do not use when:** an authoritative source directly answers a low-stakes factual question; the task is mechanical and already decided; uncertainty cannot change the action and further analysis would only decorate the answer; nearby plausible states, alternate horizons, or coarser prediction targets cannot change the action, verification plan, or confidence claim; a current authoritative source resolves the relevant state and further situation modeling cannot alter the authorized action; casual language, jokes, vents, or brainstorming do not make a load-bearing claim; formalizing the claim cannot change the decision or would erase causal, temporal, probabilistic, normative, or authorization-relevant structure; the choice is routine, low-stakes, mechanically settled, or a richer value audit cannot change the move.
 
 ### [Strategic Response and Incentives](operating-thought/decisions/strategic-response-and-incentives.md)
 
 Model other actors' responses, information, incentives, commitments, and selection only when those features materially change the decision.
 
-**Consult when:** an actor can respond strategically to the principal's action; credibility, commitment, signaling, screening, bargaining, enforcement, or repeated interaction changes the recommendation; selection effects, adverse selection, winner's curse, or strategic ranking may distort observed evidence; a stable arrangement may persist despite being inefficient, unfair, or harmful.
+**Consult when:** an actor can respond strategically to the principal's action; credibility, commitment, signaling, screening, bargaining, enforcement, or repeated interaction changes the recommendation; selection effects, adverse selection, winner's curse, or strategic ranking may distort observed evidence; a stable arrangement may persist despite being inefficient, unfair, or harmful; network participation changes value, trust, congestion, privacy, or coordination cost.
 
-**Do not use when:** another person is involved but ordinary communication or causal reasoning is sufficient; error, confusion, incompetence, path dependence, or misaligned incentives explains the behavior without strategic intent; payoffs, actors, options, or information cannot be specified well enough to change the action.
+**Do not use when:** another person is involved but ordinary communication or causal reasoning is sufficient; error, confusion, incompetence, path dependence, or misaligned incentives explains the behavior without strategic intent; payoffs, actors, options, or information cannot be specified well enough to change the action; strategic vocabulary would encourage manipulation, paranoia, or false precision.
 
 ## Architecture, change, and documentation
 
@@ -69,7 +69,7 @@ Model other actors' responses, information, incentives, commitments, and selecti
 
 Record durable choices and consequential evidence claims at the minimum detail needed for safe future change, verification, repair, and rollback.
 
-**Consult when:** making a durable architecture, authority, integration, product, or governance choice; a consequential recommendation, report, audit, or release depends materially on evidence-bearing claims; a future operator needs rationale, constraints, rollback, or ownership to change the system safely; documentation is duplicated, stale, or competing with a canonical source.
+**Consult when:** making a durable architecture, authority, integration, product, or governance choice; a consequential recommendation, report, audit, or release depends materially on evidence-bearing claims; a future operator needs rationale, constraints, rollback, or ownership to change the system safely; documentation is duplicated, stale, or competing with a canonical source; a migration must prove semantic survival rather than merely preserve files; consequential analysis may become stale because the inspected system changes before execution.
 
 **Do not use when:** the task is temporary session work with no durable decision or handoff; a canonical source already answers the question and another summary would only drift; routine authoritative-source lookup or reversible low-stakes work would not become easier to verify or repair through a formal record.
 
@@ -77,7 +77,7 @@ Record durable choices and consequential evidence claims at the minimum detail n
 
 Design the smallest operationally complete change; preserve reversibility, bound feedback, and charge every dependency and state for its carrying cost.
 
-**Consult when:** adding, replacing, integrating, automating, or refactoring a meaningful component, or mapping concentration in a capability required for the objective; complexity, configuration states, dependencies, cumulative variance across a multi-step operating path, failure recovery, or long-term maintenance may dominate the local benefit; the task is dynamic enough that feedback should shape the next step; recurring observation, retry, or correction can act again before a prior effect becomes observable.
+**Consult when:** adding, replacing, integrating, automating, or refactoring a meaningful component, or mapping concentration in a capability required for the objective; complexity, configuration states, dependencies, cumulative variance across a multi-step operating path, failure recovery, or long-term maintenance may dominate the local benefit; the task is dynamic enough that feedback should shape the next step; recurring observation, retry, or correction can act again before a prior effect becomes observable; a stable convention or component is being removed; scale, network participation, or redundancy is proposed as an inherent good.
 
 **Do not use when:** the change is trivial, isolated, reversible, and already has an established procedure; the task is factual lookup or mechanical execution with no architecture decision.
 
@@ -87,6 +87,6 @@ Design the smallest operationally complete change; preserve reversibility, bound
 
 Evaluate and govern external capabilities by job, authority, egress, verification, failure surface, carrying cost, and real decision value.
 
-**Consult when:** evaluating, connecting, enabling, broadening, automating, or removing an external capability; a tool changes data egress, write authority, unattended behavior, credentials, billing, or failure surface; deciding whether a capability deserves operating thought, a skill, configuration, a domain record, or removal; connection success may be mistaken for decision value.
+**Consult when:** evaluating, connecting, enabling, broadening, automating, or removing an external capability; a tool changes data egress, write authority, unattended behavior, credentials, billing, or failure surface; deciding whether a capability deserves operating thought, a skill, configuration, a domain record, or removal; connection success may be mistaken for decision value; a consequential boundary or interface may depend on inferred scope, mismatched semantics, units, clocks, state, or uncertainty representations; retrieved content or tool output could influence privileged execution, persistence, disclosure, or external communication.
 
 **Do not use when:** an existing governed tool is used mechanically within its documented authorization and data bounds; the task is ordinary routing already covered by a tool-specific skill.

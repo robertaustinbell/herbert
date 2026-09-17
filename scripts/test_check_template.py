@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import ast
+import importlib.util
 import json
 import shutil
 import subprocess
@@ -1624,6 +1625,85 @@ class RouterRetrievalTests(unittest.TestCase):
             index,
         )
         self.assertIn("a consequential representation may omit distinctions that change its downstream task", index)
+
+    def test_router_includes_every_declared_consult_and_skip_trigger(self):
+        index = (ROOT / "index.md").read_text(encoding="utf-8")
+        self.assertIn("the principal is unavailable and delay may matter", index)
+        self.assertIn(
+            "retrieved or supplied content could influence a consequential action",
+            index,
+        )
+        self.assertIn("a stable convention or component is being removed", index)
+        spec = importlib.util.spec_from_file_location(
+            "generate_index", ROOT / "scripts" / "generate_index.py"
+        )
+        if spec is None or spec.loader is None:
+            raise RuntimeError("cannot load generate_index")
+        generator = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(generator)
+        self.assertEqual(generator.coverage_errors(ROOT), [])
+
+    def test_truncated_generator_is_rejected(self):
+        with tempfile.TemporaryDirectory(prefix="herbert-router-trunc-") as temporary:
+            clone = Path(temporary) / "repo"
+            shutil.copytree(ROOT, clone, ignore=shutil.ignore_patterns(".git", "__pycache__"))
+            generator = clone / "scripts/generate_index.py"
+            text = generator.read_text(encoding="utf-8")
+            marker = 'block.append("**Consult when:** " + join_triggers(consult))'
+            self.assertIn(marker, text)
+            generator.write_text(
+                text.replace(
+                    marker,
+                    'block.append("**Consult when:** " + join_triggers(consult[:4]))',
+                    1,
+                ),
+                encoding="utf-8",
+            )
+            generated = subprocess.run(
+                ["python3", "scripts/generate_index.py"],
+                cwd=clone,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(generated.returncode, 0, generated.stdout + generated.stderr)
+            checked = subprocess.run(
+                ["python3", "scripts/check_template.py"],
+                cwd=clone,
+                capture_output=True,
+                text=True,
+            )
+            self.assertNotEqual(checked.returncode, 0, checked.stdout + checked.stderr)
+            self.assertIn("router omitted consult trigger", checked.stdout)
+
+    def test_unknown_family_is_rejected(self):
+        with tempfile.TemporaryDirectory(prefix="herbert-router-family-") as temporary:
+            clone = Path(temporary) / "repo"
+            shutil.copytree(ROOT, clone, ignore=shutil.ignore_patterns(".git", "__pycache__"))
+            source = clone / "operating-thought/authority/least-privilege-capability-access.md"
+            text = (
+                source.read_text(encoding="utf-8")
+                .replace("id: least-privilege-capability-access", "id: topology-unknown-family", 1)
+                .replace("title: Least-Privilege Capability Access", "title: Topology Unknown Family", 1)
+            )
+            dest_dir = clone / "operating-thought/experimental"
+            dest_dir.mkdir()
+            (dest_dir / "topology-unknown-family.md").write_text(text, encoding="utf-8")
+            generated = subprocess.run(
+                ["python3", "scripts/generate_index.py"],
+                cwd=clone,
+                capture_output=True,
+                text=True,
+            )
+            self.assertNotEqual(generated.returncode, 0, generated.stdout + generated.stderr)
+            self.assertIn("not in a routed family", generated.stderr)
+            checked = subprocess.run(
+                ["python3", "scripts/check_template.py"],
+                cwd=clone,
+                capture_output=True,
+                text=True,
+            )
+            self.assertNotEqual(checked.returncode, 0, checked.stdout + checked.stderr)
+            self.assertIn("not in a routed family", checked.stdout)
 
 
 if __name__ == "__main__":
