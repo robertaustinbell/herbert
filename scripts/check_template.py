@@ -68,7 +68,7 @@ required_fragments={
  '.github/ISSUE_TEMPLATE/idea-proposal.yml':['Operating thought or operating idea','Strongest objection or competing explanation','Reversal or narrowing condition','I reviewed the proposal\'s factual claims and any agent-assisted material'],
  '.github/ISSUE_TEMPLATE/adoption-runtime-problem.yml':['Adoption or runtime problem','Template version or commit','Degraded-context behavior','I removed credentials, personal records, private prompts or messages'],
  '.github/PULL_REQUEST_TEMPLATE.md':['Decision effect','Strongest objection','Verification performed','Any public submission or external communication was authorized by the responsible person or organization'],
- '.github/workflows/validate.yml':['permissions:','contents: read','git diff --exit-code -- index.md','python3 -m unittest scripts/test_check_template.py','python3 scripts/check_template.py','python3 skills/agent-prompt-design/scripts/test_context_trial_packet.py','python3 skills/authority-effect-contracts/scripts/test_contracts.py'],
+ '.github/workflows/validate.yml':['permissions:','contents: read','python3 scripts/generate_index.py --check','python3 -m unittest discover -s scripts -p \'test_*.py\'','python3 scripts/check_template.py','python3 skills/agent-prompt-design/scripts/test_context_trial_packet.py','python3 skills/authority-effect-contracts/scripts/test_contracts.py'],
 }
 required_sections={
  'skills/agent-prompt-design/SKILL.md':{

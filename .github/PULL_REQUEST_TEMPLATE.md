@@ -26,8 +26,11 @@ Describe any material agent assistance. Distinguish agent-generated proposals fr
 
 - [ ] I changed the owning layer rather than duplicating authority elsewhere.
 - [ ] I regenerated `index.md` if operating thought frontmatter changed.
-- [ ] `python3 -m unittest scripts/test_check_template.py` passes.
+- [ ] `python3 scripts/generate_index.py --check` passes.
+- [ ] `python3 -m unittest discover -s scripts -p 'test_*.py'` passes.
 - [ ] `python3 scripts/check_template.py` passes.
+- [ ] `python3 skills/agent-prompt-design/scripts/test_context_trial_packet.py` passes.
+- [ ] `python3 skills/authority-effect-contracts/scripts/test_contracts.py` passes.
 - [ ] `git diff --check` passes.
 - [ ] I reviewed the complete diff for unintended scope and malformed prose.
 - [ ] I verified citations, command output, changed files, and claimed results against their sources or artifacts.

@@ -9,11 +9,9 @@ Use this when current workspace evidence is stale or explicitly marked unverifie
 3. In the verifier:
    - read only the relevant source files;
    - assert exact behavioral markers and counts;
-   - run the project build;
-   - start a local server on port `0` or another ephemeral loopback port;
-   - request representative generated pages and changed assets;
-   - assert status, body presence, and content type where meaningful;
-   - terminate the server in `finally`.
+   - run the project build only when the artifact has a build or generation boundary;
+   - for web artifacts, start a local server on port `0` or another ephemeral loopback port, request representative generated pages and changed assets, assert status, body presence, and content type where meaningful, and terminate the server in `finally`;
+   - for non-web artifacts, use the relevant acceptance checks instead of HTTP-server or page requests.
 4. Print a compact machine-readable result, for example:
 
 ```text

@@ -36,10 +36,14 @@ Then:
 4. **Verify the repository:** run the checks below.
 
 ```bash
-python3 scripts/generate_index.py
-python3 -m unittest scripts/test_check_template.py
+python3 scripts/generate_index.py --check
+python3 -m unittest discover -s scripts -p 'test_*.py'
 python3 scripts/check_template.py
+python3 skills/agent-prompt-design/scripts/test_context_trial_packet.py
+python3 skills/authority-effect-contracts/scripts/test_contracts.py
 ```
+
+Regenerate `index.md` with `python3 scripts/generate_index.py` only after intentional operating-thought metadata changes.
 
 The bootstrap is intentionally conservative. It must not silently overwrite an existing identity or manufacture authority.
 

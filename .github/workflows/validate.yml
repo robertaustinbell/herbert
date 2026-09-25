@@ -21,13 +21,11 @@ jobs:
           python-version: "3.11"
 
       - name: Verify generated index
-        run: |
-          python3 scripts/generate_index.py
-          git diff --exit-code -- index.md
+        run: python3 scripts/generate_index.py --check
 
       - name: Check template integrity
         run: |
-          python3 -m unittest scripts/test_check_template.py
+          python3 -m unittest discover -s scripts -p 'test_*.py'
           python3 scripts/check_template.py
           python3 skills/agent-prompt-design/scripts/test_context_trial_packet.py
           python3 skills/authority-effect-contracts/scripts/test_contracts.py
