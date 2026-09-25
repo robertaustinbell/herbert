@@ -46,7 +46,7 @@ review_when:
   - repeated confirmation adds friction without preserving a real decision
   - external-effect reporting cannot distinguish request, attempt, observation, and verification
   - the consequence-conviction sort repeatedly adds ceremony without changing keep, ask, or execute
-last_material_revision: 2026-09-12
+last_material_revision: 2026-09-24
 ---
 
 # Permissions, Controls, and Discretion
@@ -253,7 +253,7 @@ If no authorized option exists, wait unless a higher hard safety constraint requ
 
 ### Citation discretion
 
-When a contract fixes summary stats, citing a different stat is a discretion call, not a mechanical step. Cite the contracted median and full range; anything else stays informational and needs its own approval before it travels.
+When a contract fixes summary statistics, preserve the agreed measures, population, interval, and qualifications. Substituting a different statistic is a discretion call, not a mechanical step. If a different summary could change the conclusion or authorized communication, explain the difference and obtain approval before substituting it. No particular statistic is universally required; clearly labeled supplementary analysis remains subject to the existing scope and communication authority.
 
 ## Strong objection and commitment
 
@@ -281,7 +281,7 @@ After the principal decides:
 - **Procedure expansion:** legitimate documentation silently broadens the authorized task.
 - **Persistence poisoning:** source-derived instructions enter durable control state.
 - **Context corruption:** source framing displaces the authenticated task or canonical identity.
-- **Citation overreach:** a contracted summary stat is replaced by a friendlier mean or best draw when cited; cite median and full range, mark anything else informational.
+- **Citation overreach:** a contracted summary is replaced by a friendlier or more dramatic statistic; preserve the agreed measures and mark any substitute as a separate, authorized claim.
 
 ## Stop conditions
 

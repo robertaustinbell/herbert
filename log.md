@@ -1,5 +1,11 @@
 # Material operating log
 
+## 2026-09-24 — Metadata, routing, and executable-input integrity
+
+- **Change:** Operating-thought metadata is parsed with an explicit flat string/list grammar and schema-validated before inactive filtering. Router coverage now binds owner, consult/skip role, and trigger text in live linked headings. Checker freshness is non-mutating; path exclusions are relative to the repository root. Authority/effect CLIs reject duplicate JSON keys and malformed enums with contract errors. Context-capacity units are size versus latency. Imported statistical and verification rules were generalized. No SOUL change.
+- **Decision effect:** Unproven in live retrieval or field use. Structural: quoted or commented `active` status, comment-only or wrong-owner triggers, and duplicate JSON keys no longer pass as valid.
+- **Falsifier:** an active page that disappears without a parser error, a relocated trigger that still satisfies coverage, a duplicate-key CLI input that validates, or a capacity measurement in milliseconds that is treated as context size.
+
 ## 2026-09-17 — Silent router truncation removed
 
 - **Change:** The generated router now includes every declared consult and skip trigger. Active pages outside routed families fail generation and checking. No SOUL change.

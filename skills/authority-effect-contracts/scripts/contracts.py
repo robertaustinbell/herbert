@@ -31,6 +31,16 @@ EVIDENCE_KINDS = {
 SENSITIVE_KEY = re.compile(r"(?:password|passwd|secret|token|api[_-]?key|private[_-]?key)", re.I)
 
 
+def reject_duplicate_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    """Reject ambiguous objects at every depth before contract validation."""
+    result: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in result:
+            raise ContractError(f"duplicate JSON key: {key}")
+        result[key] = value
+    return result
+
+
 def _object(value: Any, label: str) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ContractError(f"{label} must be a JSON object")
@@ -124,9 +134,9 @@ def validate_effect_receipt(value: Any) -> dict[str, Any]:
         raise ContractError("unsupported effect receipt schema_version")
     for field in ("receipt_id", "target", "operation"):
         _text(obj[field], field)
-    if obj["effect_status"] not in EFFECT_STATES:
+    if not isinstance(obj["effect_status"], str) or obj["effect_status"] not in EFFECT_STATES:
         raise ContractError(f"effect_status must be one of {sorted(EFFECT_STATES)}")
-    if obj["evidence_completeness"] not in EVIDENCE_COMPLETENESS:
+    if not isinstance(obj["evidence_completeness"], str) or obj["evidence_completeness"] not in EVIDENCE_COMPLETENESS:
         raise ContractError(f"evidence_completeness must be one of {sorted(EVIDENCE_COMPLETENESS)}")
     surface = _text(obj["acting_surface"], "acting_surface", nullable=True)
     observed_at = _timestamp(obj["observed_at"], "observed_at", nullable=True)

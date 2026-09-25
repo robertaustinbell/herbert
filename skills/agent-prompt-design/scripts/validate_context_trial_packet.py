@@ -100,7 +100,9 @@ def _has_duplicate_strings(values: list[Any]) -> bool:
     return len(strings) != len(set(strings))
 
 
-def _measurement(value: Any, path: str, errors: list[str]) -> dict[str, Any] | None:
+def _measurement(value: Any, path: str, errors: list[str], *,
+                 allowed_units: tuple[str, ...] = ("bytes", "tokens")) -> dict[str, Any] | None:
+    error_count = len(errors)
     obj = _object(
         value,
         path,
@@ -115,8 +117,8 @@ def _measurement(value: Any, path: str, errors: list[str]) -> dict[str, Any] | N
     method = obj.get("method")
     if kind not in ("exact", "range", "not_measured"):
         errors.append(f"{path}.kind must be exact, range, or not_measured")
-    if unit not in ("bytes", "tokens", "milliseconds"):
-        errors.append(f"{path}.unit must be bytes, tokens, or milliseconds")
+    if unit not in allowed_units:
+        errors.append(f"{path}.unit must be {' or '.join(allowed_units)}")
     _nonempty_string(method, f"{path}.method", errors)
     if "source" in obj:
         _nonempty_string(obj.get("source"), f"{path}.source", errors)
@@ -160,7 +162,7 @@ def _measurement(value: Any, path: str, errors: list[str]) -> dict[str, Any] | N
     elif kind == "not_measured":
         if set(obj) & {"value", "lower", "upper"}:
             errors.append(f"{path}: not_measured cannot contain numeric fields")
-    return obj
+    return obj if len(errors) == error_count else None
 
 
 def _bounds(measurement: dict[str, Any]) -> tuple[float, float] | None:
@@ -338,26 +340,27 @@ def validate_packet(packet: dict[str, Any]) -> list[str]:
                             f"{path}.context.observed_limit must match runtime observed_usable_capacity units and bounds"
                         )
                     assert rendered_bounds and input_bounds and peak_bounds and tool_bounds and verification_bounds and limit_bounds and margin_bounds
-                    component_upper = rendered_bounds[1] + input_bounds[1]
-                    if peak_bounds[0] < component_upper:
-                        errors.append(
-                            f"{path}.context: peak lower bound must cover rendered prompt and input artifact upper bounds"
-                        )
-                    used_lower = peak_bounds[0] + tool_bounds[0] + verification_bounds[0]
-                    used_upper = peak_bounds[1] + tool_bounds[1] + verification_bounds[1]
-                    if used_upper > limit_bounds[0]:
-                        errors.append(
-                            f"{path}.context: peak plus reserves exceeds the conservative observed limit"
-                        )
-                    else:
-                        derived_margin = (
-                            limit_bounds[0] - used_upper,
-                            limit_bounds[1] - used_lower,
-                        )
-                        if margin_bounds != derived_margin:
+                    if len(units) == 1:
+                        component_upper = rendered_bounds[1] + input_bounds[1]
+                        if peak_bounds[0] < component_upper:
                             errors.append(
-                                f"{path}.context: declared margin bounds must match the derived capacity range"
+                                f"{path}.context: peak lower bound must cover rendered prompt and input artifact upper bounds"
                             )
+                        used_lower = peak_bounds[0] + tool_bounds[0] + verification_bounds[0]
+                        used_upper = peak_bounds[1] + tool_bounds[1] + verification_bounds[1]
+                        if used_upper > limit_bounds[0]:
+                            errors.append(
+                                f"{path}.context: peak plus reserves exceeds the conservative observed limit"
+                            )
+                        else:
+                            derived_margin = (
+                                limit_bounds[0] - used_upper,
+                                limit_bounds[1] - used_lower,
+                            )
+                            if margin_bounds != derived_margin:
+                                errors.append(
+                                    f"{path}.context: declared margin bounds must match the derived capacity range"
+                                )
 
         results = condition.get("acceptance_results")
         result_ids: list[Any] = []
@@ -426,7 +429,8 @@ def validate_packet(packet: dict[str, Any]) -> list[str]:
             for key in ("tool_calls", "merge_repair_actions"):
                 if not isinstance(costs.get(key), int) or isinstance(costs.get(key), bool) or costs.get(key, -1) < 0:
                     errors.append(f"{path}.costs.{key} must be a non-negative integer")
-            _measurement(costs.get("latency"), f"{path}.costs.latency", errors)
+            _measurement(costs.get("latency"), f"{path}.costs.latency", errors,
+                         allowed_units=("milliseconds",))
             money = _object(costs.get("monetary_cost"), f"{path}.costs.monetary_cost", {"status", "amount", "currency"}, {"status", "amount", "currency"}, errors)
             if money:
                 if money.get("status") not in ("measured", "not_available"):

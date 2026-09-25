@@ -82,7 +82,7 @@ review_when:
   - the statistical-evidence gate repeatedly adds terminology without changing an estimate, evaluation design, recommendation, abstention, verification, or repair
   - a declared trajectory limitation is used to excuse a model that fails its predeclared range, regime, structural, distributional, or decision-level prediction
   - the provisional-frame loop repeatedly adds ceremony without changing the recommendation, or is applied to mechanical or already-defined work
-last_material_revision: 2026-09-12
+last_material_revision: 2026-09-24
 ---
 
 # Decision Quality Under Uncertainty
@@ -573,9 +573,9 @@ When reviewing:
 
 Do not protect operating thought from a bad outcome by declaring every failure “variance.” A repeated directional miss is evidence.
 
-## Compare at more than one operating point
+## Check operating-point sensitivity when it matters
 
-A single threshold can hide a rank reversal: one option wins at a loose operating point and loses at a strict one. When a metric depends on a threshold, report at least two operating points with uncertainty, state the hypothesis before the run, and never let a small mean shift in score space stand in for a measured gap in metric space. Near-identical scores can still decide differently: a rank correlation of 0.99 does not imply two monitors act alike — verify at the operating point, where the density lives.
+A single threshold can hide a rank reversal: one option wins at a loose operating point and loses at a strict one. Test additional plausible operating points when threshold uncertainty or sensitivity could change the decision, safety assessment, or claimed advantage. State the hypothesis before the run, report uncertainty, and compare the actual decision metric rather than treating a small mean score shift or high rank correlation as equivalent behavior. If the operating point is fixed and nearby plausible thresholds cannot change the decision or confidence, verify at that point without requiring extra comparisons.
 
 ## Stop conditions
 

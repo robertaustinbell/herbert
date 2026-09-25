@@ -16,7 +16,7 @@ required += [
 for name in required:
     if not (ROOT/name).is_file(): errors.append(f'missing required file: {name}')
 for path in ROOT.rglob('*'):
-    if path.is_file() and not any(part in SKIP_PARTS for part in path.parts):
+    if path.is_file() and not any(part in SKIP_PARTS for part in path.relative_to(ROOT).parts):
         try:
             text=path.read_text()
         except UnicodeDecodeError:
@@ -714,7 +714,7 @@ approved_public_links={
  'https://github.com/robertaustinbell/hermes-agent/commit/d2151ca5221116987a45f6c91f00d505b1ce7655',
  'https://github.com/robertaustinbell/hermes-agent/commit/fba90539ca5e75444ca0588106dec43a7c766089',
 }
-def skipped(p): return any(part in SKIP_PARTS for part in p.parts)
+def skipped(p): return any(part in SKIP_PARTS for part in p.relative_to(ROOT).parts)
 text_files=[]
 for p in ROOT.rglob('*'):
     if not p.is_file() or skipped(p) or p.name in {'LICENSE','check_template.py'}: continue
@@ -727,18 +727,8 @@ for p in ROOT.rglob('*'):
     for label,pat in banned.items():
         if re.search(pat,privacy_scan_text,re.I): errors.append(f'{label} in {p.relative_to(ROOT)}')
     if text and not text.endswith('\n'): errors.append(f'missing final newline: {p.relative_to(ROOT)}')
-ids=[]
-for p in sorted((ROOT/'operating-thought').rglob('*.md')):
-    text=p.read_text()
-    if not text.startswith('---\n') or '\n---\n' not in text[4:]: errors.append(f'bad frontmatter: {p.relative_to(ROOT)}');continue
-    fm=text.split('\n---\n',1)[0]
-    for key in ['id','type','status','authority','confidence','scope','consult_when','do_not_use_when','router_summary','decision_effect','review_when']:
-        if not re.search(rf'(?m)^{re.escape(key)}:',fm): errors.append(f'{p.relative_to(ROOT)} missing {key}')
-    m=re.search(r'(?m)^id:\s*(.+)$',fm)
-    if m: ids.append((m.group(1).strip(),p))
-for ident in {x for x,_ in ids}:
-    ps=[str(p.relative_to(ROOT)) for x,p in ids if x==ident]
-    if len(ps)>1: errors.append(f'duplicate operating thought id {ident}: {ps}')
+# Metadata and duplicate IDs are validated by generate_index.coverage_errors below.
+ids = sorted((ROOT / 'operating-thought').rglob('*.md'))
 
 link_re=re.compile(r'(?<!!)\[[^\]]+\]\(([^)]+)\)')
 for p in text_files:
@@ -749,10 +739,8 @@ for p in text_files:
         if not (p.parent/target).resolve().exists(): errors.append(f'broken link in {p.relative_to(ROOT)}: {target}')
 gen=ROOT/'scripts/generate_index.py'
 if gen.exists() and (ROOT/'index.md').exists():
-    before=(ROOT/'index.md').read_bytes()
-    cp=subprocess.run([sys.executable,str(gen)],cwd=ROOT,capture_output=True,text=True)
-    if cp.returncode: errors.append('index generator failed: '+cp.stderr.strip())
-    elif (ROOT/'index.md').read_bytes()!=before: errors.append('index.md was stale (regenerated during check)')
+    cp=subprocess.run([sys.executable,str(gen),'--check'],cwd=ROOT,capture_output=True,text=True)
+    if cp.returncode: errors.append('index generator check failed: '+cp.stderr.strip())
 for p in ROOT.rglob('*'):
     if skipped(p): continue
     if p.name.startswith('._') or p.name=='.DS_Store': errors.append(f'metadata sidecar: {p.relative_to(ROOT)}')

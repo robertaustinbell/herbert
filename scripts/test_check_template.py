@@ -1093,7 +1093,8 @@ class OperatingThoughtTopologyTests(CanaryHarness):
 
         result = self.run_copy(mutate)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertIn("9 operating thought pages", result.stdout)
+        expected_count = len(list((ROOT / "operating-thought").rglob("*.md"))) + 1
+        self.assertIn(f"{expected_count} operating thought pages", result.stdout)
 
     def test_rejects_duplicate_operating_thought_id(self):
         result = self.run_copy(lambda clone: self.add_operating_thought(clone, duplicate_id=True))

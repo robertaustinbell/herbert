@@ -108,6 +108,7 @@ Every page requires `confidence_basis`. Use claim- or section-level annotations 
 
 ```yaml
 id:
+title:
 type: operating-thought
 status: active
 authority: adopted | advisory
@@ -126,6 +127,17 @@ last_material_revision:
 ```
 
 Lists may be empty only when the absence is meaningful and explicit. `consult_when`, `do_not_use_when`, `confidence_basis`, and `review_when` must not be empty.
+
+### Machine-readable metadata format
+
+The generator and checker share a dependency-free **flat string/list grammar**, not a general YAML parser. Every Markdown file under `operating-thought/` is parsed and schema-validated **before** inactive pages are filtered. Move historical formats to `archive/`; changing a status must not hide malformed metadata.
+
+- Frontmatter starts and ends with a line containing exactly `---`. Keys are unique lowercase letters/underscores followed by `:`. Duplicate keys, nested structures, continuation lines, block scalars, anchors, aliases, tags, and nonempty inline collections are rejected rather than ignored.
+- Scalars are single-line strings: plain text, single-quoted text (double an embedded single quote), or double-quoted text with JSON escapes. Plain text has no implicit YAML type conversion; `null`, `~`, `true`, and `false` are rejected unless quoted. A whitespace-prefixed `#` starts a comment outside quotes. Colons inside plain text remain literal text.
+- Lists use a bare key followed by exactly two spaces, `- `, and a string per item; `[]` declares an empty list. Scalar/list mixing and blank list items are invalid. Lines containing only whitespace or comments are ignored.
+- `id`, `title`, `type`, `status`, `authority`, `confidence`, `router_summary`, and `last_material_revision` are required nonempty strings. Public provenance requires a nonempty `lineage` string. The remaining required fields in the schema above are lists of nonempty strings. The four trigger/basis/review lists named above must contain at least one item. Active authority is `adopted` or `advisory`; all statuses and confidence values use the vocabularies above.
+
+Router coverage is checked within each active linked owner heading and its declared **Consult when** or **Do not use when** paragraph; comments, fenced examples, another owner, or the opposite role cannot satisfy a trigger. Checker freshness uses `generate_index.py --check` and never rewrites `index.md`.
 
 ## Principles and rules
 

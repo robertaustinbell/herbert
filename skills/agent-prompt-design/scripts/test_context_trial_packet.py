@@ -40,8 +40,125 @@ class ContextTrialPacketTests(unittest.TestCase):
         errors = self.errors_after(mutate)
         self.assertTrue(any(fragment in error for error in errors), errors)
 
+    def test_capacity_measurements_reject_time_units_even_without_fit(self):
+        fields = [("runtime", "observed_usable_capacity")] + [
+            ("context", key) for key in (
+                "rendered_prompt", "input_artifacts", "tool_output_reserve",
+                "verification_reserve", "peak_rendered_context", "observed_limit", "margin",
+            )
+        ]
+        for section, field in fields:
+            for kind in ("exact", "range", "not_measured"):
+                for fit in (False, True):
+                    with self.subTest(section=section, field=field, kind=kind, fit=fit):
+                        packet = copy.deepcopy(self.valid)
+                        condition = packet["conditions"][0]
+                        condition["context"]["context_fit"] = fit
+                        measurement = {"kind": kind, "unit": "milliseconds", "method": "clock"}
+                        if kind == "exact":
+                            measurement["value"] = 1
+                        elif kind == "range":
+                            measurement.update(lower=1, upper=2)
+                        condition[section][field] = measurement
+                        errors = validate_packet(packet)
+                        self.assertTrue(any(
+                            f"{section}.{field}.unit must be bytes or tokens" in error
+                            for error in errors
+                        ), errors)
+
+    def test_latency_rejects_capacity_units_for_all_measurement_kinds(self):
+        for kind in ("exact", "range", "not_measured"):
+            for unit, method in (("bytes", "utf8_byte_count"), ("tokens", "runtime_tokenizer")):
+                with self.subTest(kind=kind, unit=unit):
+                    packet = copy.deepcopy(self.valid)
+                    measurement = {"kind": kind, "unit": unit, "method": method}
+                    if kind == "exact":
+                        measurement["value"] = 1
+                    elif kind == "range":
+                        measurement.update(lower=1, upper=2)
+                    packet["conditions"][0]["costs"]["latency"] = measurement
+                    self.assertTrue(any(
+                        "costs.latency.unit must be milliseconds" in error
+                        for error in validate_packet(packet)
+                    ))
+
+    def test_consistent_capacity_units_and_latency_remain_valid(self):
+        for unit, method in (("bytes", "utf8_byte_count"), ("tokens", "runtime_tokenizer")):
+            with self.subTest(unit=unit):
+                packet = copy.deepcopy(self.valid)
+                for condition in packet["conditions"]:
+                    measurements = [condition["runtime"]["observed_usable_capacity"]] + [
+                        value for value in condition["context"].values() if isinstance(value, dict)
+                    ]
+                    for measurement in measurements:
+                        measurement["unit"] = unit
+                        if measurement["kind"] == "exact":
+                            measurement["method"] = method
+                self.assertEqual([], validate_packet(packet))
+
+    def test_time_units_cannot_pass_context_fit_cli(self):
+        packet = copy.deepcopy(self.valid)
+        for condition in packet["conditions"]:
+            measurements = [condition["runtime"]["observed_usable_capacity"]] + [
+                value for value in condition["context"].values() if isinstance(value, dict)
+            ]
+            for measurement in measurements:
+                measurement["unit"] = "milliseconds"
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "packet.json"
+            path.write_text(json.dumps(packet), encoding="utf-8")
+            result = subprocess.run([sys.executable, str(VALIDATOR), str(path)], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertEqual(result.stderr, "")
+        self.assertIn(".unit must be bytes or tokens", result.stdout)
+
+    def test_invalid_or_mixed_measurements_are_not_used_in_capacity_math(self):
+        for update in (
+            {"unit": "milliseconds", "lower": 999999, "upper": 999999},
+            {"unit": "bytes", "lower": 999999, "upper": 999999},
+            {"lower": -2, "upper": -1},
+            {"lower": 999999, "upper": 1},
+            {"unit": []},
+            {"method": None},
+        ):
+            with self.subTest(update=update):
+                packet = copy.deepcopy(self.valid)
+                packet["conditions"][0]["context"]["peak_rendered_context"].update(update)
+                errors = validate_packet(packet)
+                self.assertTrue(errors)
+                for fragment in (
+                    "peak lower bound must cover", "peak plus reserves exceeds",
+                    "declared margin bounds must match",
+                ):
+                    self.assertFalse(any(fragment in error for error in errors), errors)
+
+    def test_schema_limits_units_by_measurement_role(self):
+        schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
+        definitions = schema["$defs"]
+        capacity = [definitions["runtime"]["properties"]["observed_usable_capacity"]] + [
+            value for value in definitions["context"]["properties"].values()
+            if value.get("$ref") == "#/$defs/measurement"
+        ]
+        self.assertEqual(len(capacity), 8)
+        for measurement in capacity:
+            self.assertEqual(
+                measurement.get("properties", {}).get("unit", {}).get("enum"),
+                ["bytes", "tokens"],
+            )
+        latency = definitions["costs"]["properties"]["latency"]
+        self.assertEqual(latency.get("properties", {}).get("unit", {}).get("enum"), ["milliseconds"])
+
     def test_valid_synthetic_packet_passes(self):
         self.assertEqual([], validate_packet(copy.deepcopy(self.synthetic)))
+
+    def test_cli_rejects_nested_duplicate_keys_before_contract_validation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "packet.json"
+            path.write_text('{"conditions": [{"context": {"unit": "bytes", "unit": "tokens"}}]}', encoding="utf-8")
+            result = subprocess.run([sys.executable, str(VALIDATOR), str(path)], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertEqual(result.stderr, "")
+        self.assertIn("INVALID: duplicate key: unit", result.stdout)
 
     def test_duplicate_json_keys_fail_closed(self):
         with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as handle:
@@ -92,7 +209,7 @@ class ContextTrialPacketTests(unittest.TestCase):
             lambda p: p["conditions"][0]["context"]["rendered_prompt"].update(
                 {"unit": {"confused": True}}
             ),
-            "rendered_prompt.unit must be bytes, tokens, or milliseconds",
+            "rendered_prompt.unit must be bytes or tokens",
         )
 
     def test_exact_token_measurement_requires_runtime_tokenizer(self):

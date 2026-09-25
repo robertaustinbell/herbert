@@ -287,7 +287,10 @@
           "$ref": "#/$defs/nonempty"
         },
         "observed_usable_capacity": {
-          "$ref": "#/$defs/measurement"
+          "$ref": "#/$defs/measurement",
+          "properties": {
+            "unit": {"enum": ["bytes", "tokens"]}
+          }
         },
         "capacity_observation_status": {
           "enum": [
@@ -319,25 +322,46 @@
       ],
       "properties": {
         "rendered_prompt": {
-          "$ref": "#/$defs/measurement"
+          "$ref": "#/$defs/measurement",
+          "properties": {
+            "unit": {"enum": ["bytes", "tokens"]}
+          }
         },
         "input_artifacts": {
-          "$ref": "#/$defs/measurement"
+          "$ref": "#/$defs/measurement",
+          "properties": {
+            "unit": {"enum": ["bytes", "tokens"]}
+          }
         },
         "tool_output_reserve": {
-          "$ref": "#/$defs/measurement"
+          "$ref": "#/$defs/measurement",
+          "properties": {
+            "unit": {"enum": ["bytes", "tokens"]}
+          }
         },
         "verification_reserve": {
-          "$ref": "#/$defs/measurement"
+          "$ref": "#/$defs/measurement",
+          "properties": {
+            "unit": {"enum": ["bytes", "tokens"]}
+          }
         },
         "peak_rendered_context": {
-          "$ref": "#/$defs/measurement"
+          "$ref": "#/$defs/measurement",
+          "properties": {
+            "unit": {"enum": ["bytes", "tokens"]}
+          }
         },
         "observed_limit": {
-          "$ref": "#/$defs/measurement"
+          "$ref": "#/$defs/measurement",
+          "properties": {
+            "unit": {"enum": ["bytes", "tokens"]}
+          }
         },
         "margin": {
-          "$ref": "#/$defs/measurement"
+          "$ref": "#/$defs/measurement",
+          "properties": {
+            "unit": {"enum": ["bytes", "tokens"]}
+          }
         },
         "context_fit": {
           "type": "boolean"
@@ -472,7 +496,10 @@
           "minimum": 0
         },
         "latency": {
-          "$ref": "#/$defs/measurement"
+          "$ref": "#/$defs/measurement",
+          "properties": {
+            "unit": {"enum": ["milliseconds"]}
+          }
         },
         "monetary_cost": {
           "$ref": "#/$defs/money"

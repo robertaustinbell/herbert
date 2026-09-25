@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import subprocess
 import tempfile
 import unittest
 from datetime import datetime, timedelta, timezone
@@ -52,6 +53,63 @@ def receipt(**updates):
     }
     value.update(updates)
     return value
+
+
+class CliInputBoundaryTests(unittest.TestCase):
+    def test_duplicate_keys_rejected_at_every_manifest_and_receipt_input(self):
+        manifest = authority()
+        cases = [
+            ("validate_authority_manifest.py", [manifest], 0),
+            ("check_authority_subset.py", [manifest, manifest], 0),
+            ("check_authority_subset.py", [manifest, manifest], 1),
+            ("validate_effect_receipt.py", [receipt()], 0),
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            for script, values, position in cases:
+                for nested in (False, True):
+                    with self.subTest(script=script, position=position, nested=nested):
+                        paths = []
+                        for index, value in enumerate(values):
+                            text = json.dumps(value)
+                            if index == position:
+                                if nested:
+                                    text = text[:-1] + ', "probe": {"key": 1, "key": 2}}'
+                                else:
+                                    text = '{"schema_version":"shadowed",' + text[1:]
+                            path = Path(tmp) / f"input-{index}.json"
+                            path.write_text(text, encoding="utf-8")
+                            paths.append(str(path))
+                        result = subprocess.run(
+                            [sys.executable, str(SKILL_ROOT / "scripts" / script), *paths],
+                            capture_output=True, text=True,
+                        )
+                        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+                        self.assertEqual(result.stderr, "")
+                        diagnostic = json.loads(result.stdout)
+                        self.assertIs(diagnostic["valid"], False)
+                        self.assertIn("duplicate JSON key", " ".join(diagnostic["errors"]))
+
+    def test_unique_manifest_and_receipt_cli_inputs_still_pass(self):
+        parent = authority()
+        cases = [
+            ("validate_authority_manifest.py", [parent]),
+            ("check_authority_subset.py", [parent, dict(parent, manifest_id="child")]),
+            ("validate_effect_receipt.py", [receipt()]),
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            for script, values in cases:
+                with self.subTest(script=script):
+                    paths = []
+                    for index, value in enumerate(values):
+                        path = Path(tmp) / f"input-{index}.json"
+                        path.write_text(json.dumps(value), encoding="utf-8")
+                        paths.append(str(path))
+                    result = subprocess.run(
+                        [sys.executable, str(SKILL_ROOT / "scripts" / script), *paths],
+                        capture_output=True, text=True,
+                    )
+                    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                    self.assertIs(json.loads(result.stdout)["valid"], True)
 
 
 class AuthorityContractTests(unittest.TestCase):
@@ -121,6 +179,40 @@ class AuthorityContractTests(unittest.TestCase):
 
 
 class ReceiptContractTests(unittest.TestCase):
+    def test_malformed_receipt_enums_return_structured_contract_errors(self):
+        for field in ("effect_status", "evidence_completeness", "kind"):
+            for malformed in ([], {}, None, True, 7):
+                with self.subTest(field=field, malformed=malformed):
+                    value = receipt()
+                    diagnostic_field = field
+                    if field == "kind":
+                        value["verification_evidence"] = [
+                            {"kind": malformed, "handle": "fixture", "observed_result": "fixture"}
+                        ]
+                        diagnostic_field = "verification_evidence[0].kind"
+                    else:
+                        value[field] = malformed
+                    try:
+                        validate_effect_receipt(value)
+                    except ContractError as exc:
+                        self.assertIn(diagnostic_field, str(exc))
+                    except Exception as exc:
+                        self.fail(f"expected ContractError, got {type(exc).__name__}: {exc}")
+                    else:
+                        self.fail("malformed enum was accepted")
+                    with tempfile.TemporaryDirectory() as tmp:
+                        path = Path(tmp) / "receipt.json"
+                        path.write_text(json.dumps(value), encoding="utf-8")
+                        result = subprocess.run(
+                            [sys.executable, str(SKILL_ROOT / "scripts" / "validate_effect_receipt.py"), str(path)],
+                            capture_output=True, text=True,
+                        )
+                    self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+                    self.assertEqual(result.stderr, "")
+                    diagnostic = json.loads(result.stdout)
+                    self.assertIs(diagnostic["valid"], False)
+                    self.assertIn(diagnostic_field, " ".join(diagnostic["errors"]))
+
     def test_prepared_receipt_remains_non_execution(self):
         value = receipt(effect_status="prepared", evidence_completeness="complete")
         self.assertEqual(validate_effect_receipt(value)["effect_status"], "prepared")

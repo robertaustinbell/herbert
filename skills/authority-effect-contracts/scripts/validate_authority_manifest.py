@@ -4,7 +4,7 @@ import json
 import sys
 from pathlib import Path
 
-from contracts import ContractError, validate_authority_manifest
+from contracts import ContractError, reject_duplicate_keys, validate_authority_manifest
 
 
 def main(argv: list[str]) -> int:
@@ -12,7 +12,7 @@ def main(argv: list[str]) -> int:
         print(json.dumps({"valid": False, "errors": ["usage: validate_authority_manifest.py FILE"]}))
         return 2
     try:
-        value = json.loads(Path(argv[1]).read_text())
+        value = json.loads(Path(argv[1]).read_text(), object_pairs_hook=reject_duplicate_keys)
         validate_authority_manifest(value, require_active=True)
     except (OSError, json.JSONDecodeError, ContractError) as exc:
         print(json.dumps({"valid": False, "errors": [str(exc)]}, sort_keys=True))

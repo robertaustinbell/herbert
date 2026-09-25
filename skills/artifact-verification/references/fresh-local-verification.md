@@ -5,12 +5,7 @@ Use this when current workspace evidence is stale or explicitly marked unverifie
 ## Minimal recipe
 
 1. Identify the current changed paths and the behavior they are meant to preserve.
-2. Create a temporary Python verifier with:
-   - `tempfile.NamedTemporaryFile(..., prefix="hermes-verify-", delete=False)`;
-   - an OS temp directory, not the repository;
-   - a top-level direct terminal invocation of the exact generated path;
-   - cleanup after that direct run.
-   If an evidence hook attributes only direct commands, do not create or invoke the verifier inside `execute_code`, an inline interpreter wrapper, or another child process: the checks may run successfully while remaining invisible to the evidence recorder. Run canonical project checks as separate direct commands.
+2. Run the applicable canonical checks. If an acceptance truth remains uncovered, create an isolated verifier in the runtime-approved temporary workspace outside the delivered artifact. Bind its execution to the inspected source and remove it afterward. Use the conditional runtime adapter below only when its instrumentation requirements apply.
 3. In the verifier:
    - read only the relevant source files;
    - assert exact behavioral markers and counts;
@@ -26,7 +21,18 @@ AD_HOC_VERIFICATION {"errors": [], "status": "passed"}
 ```
 
 5. If the verifier itself fails, fix and rerun it. Keep harness failures separate from implementation failures.
-6. Confirm the `hermes-verify-*` temporary file is gone when feasible.
+6. Confirm temporary verifier resources are removed when feasible.
+
+## Conditional Hermes evidence-hook adapter
+
+Use this adapter only when the active Hermes evidence hook requires a prefixed file and direct command attribution. Confirm the current hook contract rather than assuming every Hermes deployment has it.
+
+- Create the verifier with `tempfile.NamedTemporaryFile(..., prefix="hermes-verify-", delete=False)` in the runtime-approved scratch directory. Honor the current environment's temporary-directory policy; do not hard-code a system temp path.
+- Invoke the exact generated file through a direct terminal command, then clean it up even if verification fails.
+- If the hook observes only direct commands, execution inside `execute_code`, an inline interpreter wrapper, or a nested child process can be real but absent from the captured evidence. Run canonical project checks separately.
+- Verify the evidence record, not merely the filename. A prefix or direct invocation alone does not prove the hook captured the execution or the artifact passed.
+
+Runtimes without this hook use their own supported execution and evidence path; they do not inherit its filename convention.
 
 ## Named metrics
 
