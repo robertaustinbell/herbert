@@ -114,6 +114,12 @@ Before relying on the installation:
 
 Record the runtime, template tag or commit, candidate and resulting installed identifiers, probe dispositions, and observed result. Use synthetic identity content in probes; do not activate an unreviewed production identity merely to test the path. A successful probe establishes only the tested loading and update path; it does not prove source authenticity beyond the tested resolution mechanism, judgment quality, or future runtime behavior.
 
+## Executable Hermes canary
+
+The [Herbert–Hermes behavioral canary](https://github.com/robertaustinbell/herbert-hermes-canary) executes the shared untrusted-content fixtures through actual Hermes CLI sessions in fresh evaluation homes. It owns its runtime adapter, pinned template source, deterministic scorer tests, opt-in live workflow, and dated verification record. Its README provides run and evidence-verification commands.
+
+This companion covers a narrow instruction-boundary comparison, not the entire adapter acceptance contract above. A green template validator does not mean these model tests ran. Live execution consumes provider quota, requires authorized authentication, and must not publish raw runtime evidence without review.
+
 ## Optional capability menu
 
 After identity loading, operating thought retrieval, and degraded-context behavior are verified, consult [OPTIONAL-TOOLS.md](OPTIONAL-TOOLS.md) for a curated, non-prescriptive list of tools used or validated in the source system. Nothing on that page is installed or authorized by this template. Evaluate each capability through [External Capability Governance](operating-thought/capabilities/external-capability-governance.md) before connecting it.

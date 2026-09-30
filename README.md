@@ -129,6 +129,8 @@ A useful personal agent develops through correction and real work. Herbert there
 
 A coherent repository does not prove good judgment. Static checks catch some drift; real work exposes bad assumptions, retrieval misses, overreach, and operating thought that does not earn its complexity.
 
+For an executable behavioral test, use the [Herbert–Hermes canary](https://github.com/robertaustinbell/herbert-hermes-canary). It runs the shared synthetic fixtures on stock Hermes and a pinned Herbert installation, retains response/tool evidence, and separates behavioral failures from execution errors. This is a bounded, opt-in regression canary, not proof of general reliability or Herbert advantage. The template checks above remain structural checks.
+
 ## Ways to participate
 
 Humans and agents can help without blurring who authorized the contribution:

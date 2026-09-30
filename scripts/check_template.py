@@ -710,6 +710,7 @@ banned={
  'secret material':r'AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|sk-[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----',
 }
 approved_public_links={
+ 'https://github.com/robertaustinbell/herbert-hermes-canary',
  'https://github.com/robertaustinbell/hermes-agent/commit/548fb95f2c9763eec37e3246543a0f80fbab1406',
  'https://github.com/robertaustinbell/hermes-agent/commit/d2151ca5221116987a45f6c91f00d505b1ce7655',
  'https://github.com/robertaustinbell/hermes-agent/commit/fba90539ca5e75444ca0588106dec43a7c766089',
