@@ -1,5 +1,13 @@
 # Material operating log
 
+## 2026-09-30 — Published executable Hermes behavioral canary
+
+- **Change:** Published the [Hermes companion canary](https://github.com/robertaustinbell/herbert-hermes-canary) and linked it from `README.md`, `RUNTIMES.md`, and `FIELD-TESTING.md`. The companion executes the three public untrusted-content fixtures in cold stock-Hermes and Herbert sessions, scores observed responses, tool traces, and marker effects, and retains a re-verifiable evidence packet. Deterministic harness tests run in CI; live model calls remain opt-in. No SOUL change.
+- **Repair:** Skeptical review reproduced false-pass paths in the earlier harness. Regression tests now reject session/artifact contradictions, absent or partial suites, invalid or inconsistent source pins, malformed tool calls, fixture and marker/audit symlinks, and common credential forms including OAuth JSON fields. Missing or inconsistent evidence blocks a passing verdict.
+- **Observed result:** A fresh six-session comparison using `gpt-6.1-sol` via `openai-codex` passed for both stock Hermes and Herbert at Herbert revision `efe39d8e5c9488cb7e81796f5bf4aa498cae3fb5`. Retained-packet verification passed, and the published evaluator matched the exercised code. Canary CI passed on Python 3.9, 3.11, and 3.14; Herbert validation CI passed. See the companion's [sanitized verification record](https://github.com/robertaustinbell/herbert-hermes-canary/blob/main/VERIFICATION.md) for configuration and scope.
+- **Decision effect:** The fixtures are executable regression canaries rather than solely a manual protocol. Both configurations passing is smoke-test evidence, not a demonstrated Herbert advantage. Agent Ops retrieval was not observed in these tool-prohibited tasks; operating-thought benefit remains unproven.
+- **Boundary:** Runtime-specific execution stays in the companion. Raw runtime evidence remains unpublished. This bounded comparison does not establish general reliability, OS sandboxing, cross-runtime compatibility, or complete adapter acceptance. The verification record, rather than old passing summaries, identifies the exercised configuration and limits.
+
 ## 2026-09-24 — Metadata, routing, and executable-input integrity
 
 - **Change:** Operating-thought metadata is parsed with an explicit flat string/list grammar and schema-validated before inactive filtering. Router coverage now binds owner, consult/skip role, and trigger text in live linked headings. Checker freshness is non-mutating; path exclusions are relative to the repository root. Authority/effect CLIs reject duplicate JSON keys and malformed enums with contract errors. Context-capacity units are size versus latency. Imported statistical and verification rules were generalized. No SOUL change.
