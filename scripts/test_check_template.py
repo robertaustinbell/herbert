@@ -28,6 +28,116 @@ class CanaryHarness(unittest.TestCase):
             return subprocess.run(CHECKER, cwd=clone, capture_output=True, text=True)
 
 
+class ActivationContractCanaryTests(CanaryHarness):
+    CLAUSES = (
+        "Consult Agent Ops before consequential claims or actions involving representation, causal inference, authority or effects, outcome verification, correction, retention, or stopping.",
+        "Re-enter at any such boundary and load only the matching operating thought or skill; skip routine lookup and already-decided mechanics.",
+        "After a material result or failure, delegation return, plan or scope change, or proposed continuation based on new evidence, re-enter only if a decision-relevant fact, assumption, authority envelope, intended effect, acceptance condition, risk, scope, or next action changed; mere progress, repeated status, or completion of already-decided mechanics does not trigger re-entry.",
+        "When a boundary appears, identify the trigger in working context, load the exact owner directly when it is already current or use the generated router to select it.",
+        "Apply only the portion of the selected owner's decision effect warranted by its declared authority, applicable scope, confidence, and stopping conditions.",
+        "Surface the trigger to the principal only when it changes the report, scope, authority, risk, acceptance, or stopping decision.",
+    )
+
+    def test_rejects_activation_clause_inversions(self):
+        mutations = (
+            ("Consult Agent Ops before consequential", "Do not Consult Agent Ops before consequential"),
+            ("skip routine lookup and already-decided mechanics.", "do not skip routine lookup and already-decided mechanics."),
+            ("does not trigger re-entry.", "does trigger re-entry."),
+            ("when it is already current or use the generated router", "when it is not already current or use the generated router"),
+            ("already current or use the generated router", "already current and use the generated router"),
+            ("Apply only the portion", "Do not Apply only the portion"),
+            ("declared authority, ", ""),
+            ("applicable scope, ", ""),
+            ("confidence, and stopping conditions.", "stopping conditions."),
+            ("confidence, and stopping conditions.", "confidence."),
+            ("declared authority, applicable scope, confidence, and stopping conditions.", "declared authority and applicable scope, ignoring confidence and stopping conditions."),
+            ("only when it changes the report, scope, authority, risk, acceptance, or stopping decision.", "only when it does not change the report, scope, authority, risk, acceptance, or stopping decision."),
+        )
+        for marker, replacement in mutations:
+            with self.subTest(marker=marker):
+                def mutate(clone):
+                    path = clone / "SOUL.md"
+                    text = path.read_text()
+                    self.assertEqual(text.count(marker), 1)
+                    path.write_text(text.replace(marker, replacement, 1))
+
+                result = self.run_copy(mutate)
+                self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertIn("SOUL.md", result.stdout)
+
+    def test_rejects_activation_clauses_hidden_or_relocated(self):
+        for clause in self.CLAUSES:
+            for placement in ("delete", "comment", "fence", "relocate"):
+                with self.subTest(clause=clause, placement=placement):
+                    def mutate(clone):
+                        path = clone / "SOUL.md"
+                        text = path.read_text()
+                        self.assertEqual(text.count(clause), 1)
+                        replacement = {
+                            "delete": "",
+                            "comment": f"<!-- {clause} -->",
+                            "fence": f"\n```text\n{clause}\n```\n",
+                            "relocate": "",
+                        }[placement]
+                        text = text.replace(clause, replacement, 1)
+                        if placement == "relocate":
+                            text += f"\n## Unrelated appendix\n\n{clause}\n"
+                        path.write_text(text)
+
+                    result = self.run_copy(mutate)
+                    self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+                    self.assertIn("SOUL.md", result.stdout)
+
+    def test_rejects_changed_state_gate_inversion(self):
+        def mutate(clone):
+            path = clone / "SOUL.md"
+            text = path.read_text()
+            marker = "re-enter only if a decision-relevant fact"
+            self.assertEqual(text.count(marker), 1)
+            path.write_text(text.replace(marker, "re-enter even if no decision-relevant fact", 1))
+
+        result = self.run_copy(mutate)
+        self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("SOUL.md", result.stdout)
+
+
+class SafeChangeProcedureBoundaryTests(CanaryHarness):
+    CLAUSE = (
+        "General architecture owns that principle. For implementation, use an "
+        "adopter-installed safe-change procedure covering tests, analyzability "
+        "checks, metric limits, bounded refactoring, stop rules, and verification; "
+        "this template does not bundle that procedure."
+    )
+
+    def test_rejects_unshipped_procedure_boundary_loss(self):
+        for placement in ("delete", "comment", "fence", "relocate", "invert"):
+            with self.subTest(placement=placement):
+                def mutate(clone):
+                    path = clone / "operating-thought/design/right-sized-change.md"
+                    text = path.read_text()
+                    self.assertEqual(text.count(self.CLAUSE), 1)
+                    replacement = {
+                        "delete": "",
+                        "comment": f"<!-- {self.CLAUSE} -->",
+                        "fence": f"```text\n{self.CLAUSE}\n```",
+                        "relocate": "",
+                        "invert": self.CLAUSE.replace("does not bundle", "does bundle"),
+                    }[placement]
+                    text = text.replace(self.CLAUSE, replacement, 1)
+                    if placement == "relocate":
+                        text += f"\n## Unrelated appendix\n\n{self.CLAUSE}\n"
+                    path.write_text(text)
+
+                result = self.run_copy(mutate)
+                self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertIn("Code-specific residue", result.stdout)
+
+    def test_public_procedure_is_adopter_installed_not_bundled(self):
+        text = (ROOT / "operating-thought/design/right-sized-change.md").read_text()
+        self.assertIn(self.CLAUSE, text)
+        self.assertIn("implemented_by: []", text)
+
+
 class GovernanceHarvestCanaryTests(CanaryHarness):
     def test_required_section_registry_has_no_duplicate_literal_keys(self):
         checker_path = ROOT / "scripts/check_template.py"
@@ -1608,6 +1718,32 @@ class ConsequentialActionControlLayerCanaryTests(CanaryHarness):
                 result = self.run_copy(mutate)
                 self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
                 self.assertIn("Consequential-action control layers", result.stdout)
+
+
+class PublicPrivacyBoundaryTests(CanaryHarness):
+    def test_public_patterns_are_generic_not_private_inventory(self):
+        tree = ast.parse((ROOT / 'scripts/check_template.py').read_text())
+        registry = next(node.value for node in tree.body if isinstance(node, ast.Assign)
+                        and any(isinstance(target, ast.Name) and target.id == 'banned'
+                                for target in node.targets))
+        self.assertEqual(set(ast.literal_eval(registry)), {'private path', 'secret material'})
+
+    def test_generic_paths_and_secrets_remain_rejected(self):
+        for value, label in ((('/' + 'Users/example/file'), 'private path'),
+                             (('gh' + 'p_' + 'a' * 36), 'secret material')):
+            with self.subTest(label=label):
+                result = self.run_copy(lambda clone: (clone / 'synthetic-leak.txt').write_text(value + '\n'))
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn(label, result.stdout)
+
+    def test_public_private_gate_split_is_documented(self):
+        marker = 'It does not publish the source maintainer\'s private deny-list.'
+        def mutate(clone):
+            path = clone / 'SYNC.md'
+            path.write_text(path.read_text().replace(marker, '[REMOVED]', 1))
+        result = self.run_copy(mutate)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('SYNC.md', result.stdout)
 
 
 class RouterRetrievalTests(unittest.TestCase):

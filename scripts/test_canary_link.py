@@ -9,13 +9,14 @@ class CompanionLinkTests(test_check_template.CanaryHarness):
         result = self.run_copy()
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
-    def test_unapproved_personal_identity_is_still_rejected(self):
+    def test_unapproved_personal_home_path_is_still_rejected(self):
+        # Source-specific identity checks belong to the private maintainer gate.
         def mutate(clone):
             path = clone / "README.md"
-            path.write_text(path.read_text() + "\n" + "Aus" + "tin" + "\n")
+            path.write_text(path.read_text() + "\n" + "/" + "Users/example/private-note" + "\n")
         result = self.run_copy(mutate)
         self.assertNotEqual(result.returncode, 0)
-        self.assertIn("private identity in README.md", result.stdout)
+        self.assertIn("private path in README.md", result.stdout)
 
 
 if __name__ == "__main__":

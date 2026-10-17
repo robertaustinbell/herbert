@@ -36,9 +36,10 @@ source_agent_name = 'Bo' + 'bert'
 if re.search(rf"\b{source_agent_name}(?:'s)?\b", operational_runtime):
     errors.append('source-agent identity residue in RUNTIMES.md')
 required_fragments={
+ 'SYNC.md':["It does not publish the source maintainer's private deny-list.",'including its checker and scripts','not a public runtime dependency or an automatically enforced push barrier'],
  'ADOPT.md':['Replace source identities before activation','Repository attribution may remain','Follow `RUNTIMES.md`','`SOUL.md` owns activation and re-entry behavior','re-enters only when decision-relevant state changes','exempts mere progress and already-decided mechanics','loads an already-current exact owner directly or uses `index.md` to select one','applies only the portion of the selected owner\'s decision effect warranted by its declared authority, applicable scope, confidence, and stopping conditions'],
  'CUSTOMIZE.md':['Identity handoff checklist','Search for the repository owner','explicit confirmation for calendar mutation and identity-bearing communication unless adopter-defined standing policy is stricter or grants a narrower authorization'],
- 'SOUL.md':['Honesty is bounded, not exhaustive transparency','State the boundary at the minimum safe level','Stewardship governs access','Treat authorized access as a trust','Association is not causation','Do not rely on a load-bearing causal claim without testing plausible alternative explanations and evidence','Keep Agent Ops operating thought on the causal path to consequential work','Consult Agent Ops before consequential claims or actions involving representation, causal inference, authority or effects, outcome verification, correction, retention, or stopping','Re-enter at any such boundary and load only the matching operating thought or skill; skip routine lookup and already-decided mechanics','proposed continuation based on new evidence','decision-relevant fact','mere progress, repeated status','completion of already-decided mechanics does not trigger re-entry','identify the trigger in working context','load the exact owner directly when it is already current','use the generated router to select it','Apply only the portion of the selected owner\'s decision effect warranted by its declared authority, applicable scope, confidence, and stopping conditions','Surface the trigger to the principal only when','If SOUL changes materially'],
+ 'SOUL.md':['Honesty is bounded, not exhaustive transparency','State the boundary at the minimum safe level','Stewardship governs access','Treat authorized access as a trust','Association is not causation','Do not rely on a load-bearing causal claim without testing plausible alternative explanations and evidence','Keep Agent Ops operating thought on the causal path to consequential work','If SOUL changes materially'],
  'README.md':['behavioral policy, not a security sandbox','[Authenticated Authority Channels for Agent Harnesses](guides/authenticated-authority-channels.md)','[OPTIONAL-TOOLS.md](OPTIONAL-TOOLS.md)','sanitized, non-prescriptive menu of capabilities','Ways to participate','Public submission, commitments, disclosures, and external communication still require authorization','Governed homes','`skills/`','`decisions/`','`domain/`','`evidence/`','`archive/`','`log.md`','[`skills/`](skills/README.md)','repository presence is not installation or authority','[`DECISION-BRIEF.md`](DECISION-BRIEF.md)','Optional worksheet for consequential choices'],
  'skills/README.md':['portable, sanitized procedures','does **not** mean they are installed, enabled, connected to tools, or granted authority','[`COMPOSITION.md`](COMPOSITION.md)','handoff contract between skills','[`agent-prompt-design`](agent-prompt-design/SKILL.md)','[`artifact-verification`](artifact-verification/SKILL.md)','[`deterministic-evidence-automation`](deterministic-evidence-automation/SKILL.md)','Private paths, case histories, live capability state, credentials, schedules, domain records, and standing permissions are excluded','stable parent procedures','nested experimental instruments','do not become stable merely because the parent links them or CI protects them'],
  'skills/COMPOSITION.md':['Producer and consumer map','Lifecycle and correlation','Failure behavior','Synthetic end-to-end example','same `task_id` must bind parent and child authority manifests','Structurally valid receipt with unresolved handle','The primary task owner retains the user-facing acceptance condition','does not transfer completion ownership or authorize adjacent work','stop composition when the requested acceptance truth is resolved'],
@@ -141,6 +142,14 @@ required_sections={
   ],
  },
  'SOUL.md':{
+  'Judgment':[
+   'Consult Agent Ops before consequential claims or actions involving representation, causal inference, authority or effects, outcome verification, correction, retention, or stopping.',
+   'Re-enter at any such boundary and load only the matching operating thought or skill; skip routine lookup and already-decided mechanics.',
+   'After a material result or failure, delegation return, plan or scope change, or proposed continuation based on new evidence, re-enter only if a decision-relevant fact, assumption, authority envelope, intended effect, acceptance condition, risk, scope, or next action changed; mere progress, repeated status, or completion of already-decided mechanics does not trigger re-entry.',
+   'When a boundary appears, identify the trigger in working context, load the exact owner directly when it is already current or use the generated router to select it.',
+   "Apply only the portion of the selected owner's decision effect warranted by its declared authority, applicable scope, confidence, and stopping conditions.",
+   'Surface the trigger to the principal only when it changes the report, scope, authority, risk, acceptance, or stopping decision.',
+  ],
   'Core truths':[
    'Prefer actions and explanations that create durable progress and reusable understanding',
    'When the principal has already decided and the remaining work is mechanical within an authorized scope—meaning no unresolved choice among materially different outcomes remains—execute without confirmation theater',
@@ -279,6 +288,10 @@ required_sections={
   ],
  },
  'operating-thought/design/right-sized-change.md':{
+  'Code-specific residue':[
+   'General architecture owns that principle.',
+   'For implementation, use an adopter-installed safe-change procedure covering tests, analyzability checks, metric limits, bounded refactoring, stop rules, and verification; this template does not bundle that procedure.',
+  ],
   'Time feedback to the system':[
    'Do not launch another corrective cycle merely because the desired result is not yet visible',
    'whether the prior action has had enough time to propagate',
@@ -553,6 +566,19 @@ def has_same_model_independence_claim(section):
             return True
     return False
 
+# Whole active sentences prevent a negating prefix from satisfying a substring
+# canary. These are bounded preservation guards, not semantic proof.
+soul_path = ROOT/'SOUL.md'
+judgment_sections = markdown_sections(soul_path.read_text(), 'Judgment') if soul_path.is_file() else []
+if len(judgment_sections) == 1:
+    activation_sentences = {
+        sentence.strip(' -*')
+        for sentence in prose_sentences(judgment_sections[0].replace('**', ''))
+    }
+    for clause in required_sections['SOUL.md']['Judgment']:
+        if clause not in activation_sentences:
+            errors.append(f'SOUL.md Judgment missing intact activation clause: {clause}')
+
 for name,fragments in required_fragments.items():
     path=ROOT/name
     if not path.is_file(): continue
@@ -704,9 +730,7 @@ for path in sorted((ROOT/'evidence/sources').glob('*.md')):
         if not has_nonblank_limits:
             errors.append(f'{relative} full-coverage claim requires a nonblank Limits and rejected transfers section')
 banned={
- 'private identity':'Austin|Lourdes|Temperance|Upstate Organized|Bell household',
- 'private path':r'/Users/|/root/|robertbell|\.hermes/cache|Documents/Agent-Ops-Wiki',
- 'runtime residue':r'Honcho|Telegram|YNAB|HealthKit|UniFi',
+ 'private path':r'/Users/|/root/|/home/',
  'secret material':r'AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|sk-[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----',
 }
 approved_public_links={

@@ -41,6 +41,13 @@ It must not carry:
 
 ## Public-update checks
 
+Publication has two complementary check layers:
+
+- **Public, reproducible checks:** this repository checks generic secret/path patterns, portable identity boundaries, metadata, links, routing, and protected content. It does not publish the source maintainer's private deny-list.
+- **Private maintainer checks:** before publication, the maintainer scans the complete candidate public tree, including its checker and scripts, against private identity, organization, path, and environment-residue patterns. Private policy remains outside this repository. Approved attribution exceptions must be narrow; an exact reviewed license-content identity is not an exemption for arbitrary future license text.
+
+The private gate is a maintainer workflow requirement, not a public runtime dependency or an automatically enforced push barrier. A standalone adopter can reproduce the public checks and supply a private gate for its own context. Current-tree checks do not erase or certify Git history, and passing either layer does not prove semantic sanitization. Review the exact staged artifact and rerun both applicable layers against the final publication tree; ignored untracked files are not part of the private worktree scanner's candidate set and must not be added later without review.
+
 Before every public update:
 
 1. inspect the private change semantically;

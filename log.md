@@ -1,5 +1,13 @@
 # Material operating log
 
+## 2026-10-17 — Local activation readability and publication-boundary repairs
+
+- **Change:** Prepared a four-part activation contract in `SOUL.md`, preserving the existing activation, changed-state re-entry, routing/application, and conditional-surfacing sentences. Clarified that code-specific procedure is adopter-installed rather than bundled. Strengthened active-section mutation guards without claiming semantic proof.
+- **Publication boundary:** Source-specific identity and environment deny-lists now belong to the private maintainer gate. The public checker retains generic secret/home-path checks and portable identity safeguards; `SYNC.md` documents the two layers. Intentional attribution is preserved. This change does not erase historical repository content or enforce a push barrier.
+- **Verification scope:** Local deterministic integrity and mutation checks protect packaging and the preserved contract. The companion's separately versioned tool-enabled development suite checks synthetic submission, read-back, explicit failure, bounded pending, recipient perturbations, and quiet work across three configurations. Deterministic executor results exercise the evaluator, not model behavior or Herbert advantage; the companion owns its verification record.
+- **Verification:** The reviewed local tree passed 142 main tests, 58 context-packet tests, 22 authority/effect tests, generated-index freshness, and template integrity. The private maintainer gate checked all candidate publishable files, including checker scripts. These are structural and synthetic checks, not evidence of improved agent judgment.
+- **Boundary:** No live/held-out model comparison was run. Runtime identity installation remains adopter-owned. No new operating-thought owner, evidence-age quota, scheduled evaluation, or runtime authority was added.
+
 ## 2026-09-30 — Published executable Hermes behavioral canary
 
 - **Change:** Published the [Hermes companion canary](https://github.com/robertaustinbell/herbert-hermes-canary) and linked it from `README.md`, `RUNTIMES.md`, and `FIELD-TESTING.md`. The companion executes the three public untrusted-content fixtures in cold stock-Hermes and Herbert sessions, scores observed responses, tool traces, and marker effects, and retains a re-verifiable evidence packet. Deterministic harness tests run in CI; live model calls remain opt-in. No SOUL change.

@@ -245,7 +245,7 @@ Do not use “avoid overengineering” to excuse unverified work, inadequate mar
 
 For software, optimize for the next safe, correct change—not aesthetic purity.
 
-General architecture owns that principle. The `safe-code-change` skill owns procedure, including tests, analyzability checks, metric limits, refactoring stop rules, and verification.
+General architecture owns that principle. For implementation, use an adopter-installed safe-change procedure covering tests, analyzability checks, metric limits, bounded refactoring, stop rules, and verification; this template does not bundle that procedure.
 
 ## Scale and network effects
 
