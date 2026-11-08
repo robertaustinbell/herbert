@@ -1,5 +1,12 @@
 # Material operating log
 
+## 2026-11-08 — Explicit policy-override target
+
+- **Change:** Clarified that a principal must identify the specific standing rule they intend to change or override.
+- **Decision effect:** Makes the intended exception explicit; no runtime or field behavior has been measured.
+- **Public evidence handle:** `SOUL.md` → Boundaries; `scripts/check_template.py` → active-section preservation guard.
+- **Boundary:** Generic starter guidance only. It creates no adopter-specific standing authority.
+
 ## 2026-11-08 — Selected strategic source locators
 
 - **Change:** Added public bibliographic references and bounded source locators for selected concepts used by Strategic Response and Incentives.

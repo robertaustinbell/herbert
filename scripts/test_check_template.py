@@ -1855,6 +1855,30 @@ class SanitizedProjectionCanaryTests(CanaryHarness):
         self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn(expected_diagnostic, result.stdout)
 
+    def test_policy_override_must_identify_the_specific_rule(self):
+        marker = "The principal must identify the specific rule and explicitly state that they are overriding or changing it."
+        mutations = {
+            "delete": "",
+            "comment": f"<!-- {marker} -->",
+            "fence": f"```text\n{marker}\n```",
+            "relocate": "",
+            "invert": marker.replace("must identify", "must not identify"),
+        }
+        for placement, replacement in mutations.items():
+            with self.subTest(placement=placement):
+                def mutate(clone, replacement=replacement):
+                    path = clone / "SOUL.md"
+                    text = path.read_text()
+                    self.assertEqual(text.count(marker), 1)
+                    text = text.replace(marker, replacement, 1)
+                    if placement == "relocate":
+                        text += f"\n## Unrelated appendix\n\n{marker}\n"
+                    path.write_text(text)
+
+                result = self.run_copy(mutate)
+                self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertIn("SOUL.md section 'Boundaries' missing required guidance", result.stdout)
+
     def test_projection_log_cannot_turn_static_checks_into_behavioral_proof(self):
         self.assert_mutation_rejected(
             "log.md",
