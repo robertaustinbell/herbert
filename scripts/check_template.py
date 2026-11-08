@@ -12,6 +12,11 @@ required += [
     'skills/agent-prompt-design/references/examples/context-trial-invalid-duplicate-key.json',
     'skills/agent-prompt-design/scripts/validate_context_trial_packet.py',
     'skills/agent-prompt-design/scripts/test_context_trial_packet.py',
+    'skills/agent-prompt-design/references/branch-result-reconciliation.md',
+    'skills/agent-prompt-design/references/interrupted-delegation-recovery.md',
+    'skills/agent-prompt-design/references/multi-agent-graph-gates.md',
+    'skills/agent-prompt-design/references/failure-patterns.md',
+    'skills/agent-prompt-design/references/capability-escalation-and-advisor.md',
 ]
 for name in required:
     if not (ROOT/name).is_file(): errors.append(f'missing required file: {name}')
@@ -57,7 +62,7 @@ required_fragments={
  'OPTIONAL-TOOLS.md':['Curated source-agent reference, not template state','Firecrawl capability','Naming an SDK or CLI here identifies an available implementation path','Wolfram Cloud MCP','The governing rule is still **job first, tool second**','The template does not install, configure, enable, or grant authority','credentials, tokens, account identifiers','That omission is part of the design, not an incomplete export'],
  'SECURITY.md':['private vulnerability reporting','Report a vulnerability','Ordinary operating thought disagreements'],
  'log.md':['Separated four consequential-action control layers','Corrected context preflight proportionality and marked the packet experimental','https://github.com/robertaustinbell/hermes-agent/commit/548fb95f2c9763eec37e3246543a0f80fbab1406','https://github.com/robertaustinbell/hermes-agent/commit/d2151ca5221116987a45f6c91f00d505b1ce7655','https://github.com/robertaustinbell/hermes-agent/commit/fba90539ca5e75444ca0588106dec43a7c766089','No integrated runtime trial combines the three probes'],
- 'operating-thought/capabilities/external-capability-governance.md':['Continuous watchers, polling loops, and background capture are disabled by default'],
+
  'operating-thought/authority/least-privilege-capability-access.md':['Policy and enforcement','behavioral policy, not a security sandbox','broader effective capability as the risk surface'],
  'operating-thought/authority/permissions-controls-and-discretion.md':['Paired example','mechanical consequences inside the named outcome and scope','altering behavior outside the specified contract','the outcome, risk, or authorization envelope has changed'],
  'operating-thought/decisions/decision-quality-under-uncertainty.md':['Keep three registers separate when values could contaminate prediction'],
@@ -72,7 +77,37 @@ required_fragments={
  '.github/workflows/validate.yml':['permissions:','contents: read','python3 scripts/generate_index.py --check','python3 -m unittest discover -s scripts -p \'test_*.py\'','python3 scripts/check_template.py','python3 skills/agent-prompt-design/scripts/test_context_trial_packet.py','python3 skills/authority-effect-contracts/scripts/test_contracts.py'],
 }
 required_sections={
+ 'log.md':{
+  '2026-11-08 — Sanitized portable projection':[
+   'No runtime or field behavior has been measured',
+   'static preservation checks do not establish improved agent judgment',
+   '**Public evidence handle:**',
+   'No fresh-session behavioral or public field test was run',
+   'publication remains subject to required human maintainer review',
+  ],
+ },
+ 'evidence/README.md':{
+  'Public source-retention boundary':[
+   'identify the named evidence purpose and verify that redistribution and continued retention are permitted',
+   'Retain only the minimum necessary material',
+   'Retain it privately only when a named review need, authority, source terms, privacy boundaries, and retention/disposal conditions all permit it',
+   'a URL, checksum, or provenance note does not mean the source itself remains available',
+  ],
+ },
+ 'GOVERNANCE.md':{
+  'Source ingestion':[
+   'a targeted sample is an initial screen, not a full review',
+   'Label sampled and unread scope',
+   'inspect later sections and qualifications when they could change interpretation or decision effect',
+   'keep the assessment provisional while that material remains unread',
+  ],
+ },
  'skills/agent-prompt-design/SKILL.md':{
+  '2. Curate minimal sufficient context':[
+   'Require reads through EOF',
+   'if it exceeds one retrieval window, read in bounded consecutive chunks and verify continuity',
+   'A path or truncated preview is not evidence that the complete contract was received',
+  ],
   '3. Define authority and operating bounds':[
    "compare the intended restrictions with the executor's actual model-visible and callable capability surface",
    'A prompt, manifest, or displayed allowlist is advisory unless the runtime enforces it',
@@ -84,6 +119,87 @@ required_sections={
    'Do not create a trial packet for this lightweight tier',
    'Use the full preflight and packet only when the graph has dependencies',
    'Passing establishes context fit only—not quality, truth, privacy, authority, or coordination reliability',
+   'Use the linked reference for measurement, reserves, stop conditions, bounded retrieval, and re-preflight rules',
+  ],
+  '4. Give strategy without strangling judgment':[
+   'Load model-specific prompting guidance only when its named model or harness is selected; it informs prompting, not model selection',
+  ],
+  '5. Select the topology from real dependencies':[
+   'Before a dependent handoff, use',
+   'before merging structured results, use',
+  ],
+  'Capability escalation and advisor hook':[
+   'When advisor and worker share a model, their errors are correlated',
+   'structural discipline—not independent error detection',
+  ],
+  '6. Engineer loops as bounded feedback systems':[
+   'Recurring work needs its own standing scope',
+   'A scheduled task does not authorize open-ended monitoring or capture',
+  ],
+  'Compact Prompt Template':[
+   'For long delegated work that may be interrupted',
+   'resume only missing work',
+  ],
+  'Failure Patterns':[
+   'diagnostic hypotheses, not automatic explanations',
+  ],
+ },
+ 'skills/agent-prompt-design/references/branch-result-reconciliation.md':{
+  'Complete input and identity':[
+   'A display preview, truncated log, or producer summary is not the complete record',
+   'Bind each result to its task, producer, and input/version identity',
+  ],
+  'Coverage and ownership':[
+   'Reconcile the exact assigned-item set',
+   'Never count absent output as success',
+  ],
+ },
+ 'skills/agent-prompt-design/references/interrupted-delegation-recovery.md':{
+  'Before dispatch':[
+   'Make the work resumable with durable progress notes, stable input identity, and structured results',
+  ],
+  'After interruption':[
+   'Resume only missing work, preserving valid artifacts',
+   'Do not repeat completed fan-out merely because one branch is missing',
+   'Treat adjacent warnings as hypotheses, not causes',
+   'Continue only through an executor that preserves the original authority and capability limits',
+  ],
+ },
+ 'skills/agent-prompt-design/references/multi-agent-graph-gates.md':{
+  'Downstream input contract':[
+   'compare its required inputs with artifacts the upstream contract actually produces',
+  ],
+  'Gated handoffs':[
+   'if a protected input changes after review, the prior result is stale',
+  ],
+  'Freshness and stop conditions':[
+   'A dispatch prompt can narrow a role but cannot override stop conditions',
+   'Keep ready and hold states mutually consistent',
+   'when a rule requires a hold, stop rather than emitting a contradictory ready signal',
+  ],
+ },
+ 'skills/agent-prompt-design/references/failure-patterns.md':{
+  'Diagnostic use':[
+   'Use these as diagnostic hypotheses, not automatic explanations',
+  ],
+ },
+ 'skills/agent-prompt-design/references/capability-escalation-and-advisor.md':{
+  'When to use':[
+   'Use only when task coupling, drift risk, verification difficulty, or expensive directional rework may justify coordination cost',
+  ],
+  'Decide whether escalation or an advisor is warranted':[
+   'Escalate on evidence',
+   'treat errors as correlated and use the role split for structural discipline, not independent error detection',
+  ],
+  'Material receipt':[
+   'Record only when intervention materially changes action or result, reveals a failure, or creates significant overhead',
+   'Record the fact and decision-relevant effect of any principal correction explicitly',
+   'summarize or redact sensitive payloads when exact wording is unnecessary',
+   'Record the minimum necessary. Prefer stable identifiers and source handles to sensitive payloads; retain receipts only under authorized scope and applicable retention/disposal rules',
+  ],
+  'Revision conditions':[
+   'Revise or disable when false alarms, premature escalation, duplicated work, correlated error, or material overhead recur',
+   'Disable immediately after a severe safety, privacy, authorization, external-side-effect, or false-verification regression attributable to the hook',
   ],
  },
  'skills/agent-prompt-design/references/multi-agent-context-budget-and-artifact-trial.md':{
@@ -327,6 +443,16 @@ required_sections={
   ],
  },
  'operating-thought/capabilities/external-capability-governance.md':{
+  'Unattended automation':[
+   'A bounded recurring job may run without per-run approval only inside a principal-adopted standing authorization',
+   'allowed sources, minimum necessary scope, outputs, cadence, retention or disposal condition',
+   'Keep the default off when that envelope is absent',
+   'bind it to its principal, authorized executor, and acting surface',
+   'set its duration or review trigger',
+   'revalidate after material scope, target, executor, or runtime changes',
+   'Continuous observation requires an explicitly authorized scope',
+   'Continuous observation requires an explicitly authorized scope with its own purpose, sources, cadence, retention, failure visibility, and stop path',
+  ],
   'Boundary and interface fidelity':[
    '“Out of scope” is an analytical choice, not evidence that excluded effects do not exist',
    'State the boundary status and the consequence of being wrong',
@@ -595,8 +721,31 @@ for fragment in (
 # guidance remains in its owning section, not runtime compliance or semantic proof.
 # Canaried sections default to H2; add an override whenever one intentionally uses another level.
 required_section_levels={
+ ('log.md','2026-11-08 — Sanitized portable projection'):2,
+ ('evidence/README.md','Public source-retention boundary'):2,
+ ('GOVERNANCE.md','Source ingestion'):2,
+ ('operating-thought/capabilities/external-capability-governance.md','Unattended automation'):2,
+ ('skills/agent-prompt-design/SKILL.md','2. Curate minimal sufficient context'):3,
  ('skills/agent-prompt-design/SKILL.md','3. Define authority and operating bounds'):3,
+ ('skills/agent-prompt-design/SKILL.md','4. Give strategy without strangling judgment'):3,
+ ('skills/agent-prompt-design/SKILL.md','5. Select the topology from real dependencies'):3,
  ('skills/agent-prompt-design/SKILL.md','Multi-agent context-capacity preflight'):4,
+ ('skills/agent-prompt-design/SKILL.md','Capability escalation and advisor hook'):4,
+ ('skills/agent-prompt-design/SKILL.md','6. Engineer loops as bounded feedback systems'):3,
+ ('skills/agent-prompt-design/SKILL.md','Compact Prompt Template'):2,
+ ('skills/agent-prompt-design/SKILL.md','Failure Patterns'):2,
+ ('skills/agent-prompt-design/references/branch-result-reconciliation.md','Complete input and identity'):2,
+ ('skills/agent-prompt-design/references/branch-result-reconciliation.md','Coverage and ownership'):2,
+ ('skills/agent-prompt-design/references/interrupted-delegation-recovery.md','Before dispatch'):2,
+ ('skills/agent-prompt-design/references/interrupted-delegation-recovery.md','After interruption'):2,
+ ('skills/agent-prompt-design/references/multi-agent-graph-gates.md','Downstream input contract'):2,
+ ('skills/agent-prompt-design/references/multi-agent-graph-gates.md','Gated handoffs'):2,
+ ('skills/agent-prompt-design/references/multi-agent-graph-gates.md','Freshness and stop conditions'):2,
+ ('skills/agent-prompt-design/references/failure-patterns.md','Diagnostic use'):2,
+ ('skills/agent-prompt-design/references/capability-escalation-and-advisor.md','When to use'):2,
+ ('skills/agent-prompt-design/references/capability-escalation-and-advisor.md','Decide whether escalation or an advisor is warranted'):2,
+ ('skills/agent-prompt-design/references/capability-escalation-and-advisor.md','Material receipt'):2,
+ ('skills/agent-prompt-design/references/capability-escalation-and-advisor.md','Revision conditions'):2,
  ('skills/agent-prompt-design/references/multi-agent-context-budget-and-artifact-trial.md','Experimental instrument status and lifecycle'):2,
  ('skills/agent-prompt-design/references/multi-agent-context-budget-and-artifact-trial.md','Validator authority'):3,
  ('operating-thought/decisions/decision-quality-under-uncertainty.md','Causal-question contract'):3,

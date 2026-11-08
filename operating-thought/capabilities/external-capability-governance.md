@@ -41,7 +41,7 @@ review_when:
   - repeated real use shows no material decision effect
   - configuration, provider behavior, or tool surface changes materially
   - carrying cost, noise, privacy exposure, or routing confusion exceeds value
-last_material_revision: 2026-08-27
+last_material_revision: 2026-11-08
 ---
 
 # External Capability Governance
@@ -191,7 +191,7 @@ Unattended operation requires more than a successful manual run:
 - no silent expansion from read to write;
 - clear notification semantics.
 
-Continuous watchers, polling loops, and background capture are disabled by default unless an authorized recurring job has a named purpose, minimum necessary scope, bounded retention, failure visibility, and an explicit stop path.
+A bounded recurring job may run without per-run approval only inside a principal-adopted standing authorization that names its purpose, allowed sources, minimum necessary scope, outputs, cadence, retention or disposal condition, failure visibility, and stop path. Keep the default off when that envelope is absent. Use the [Authorization Envelopes](../authority/permissions-controls-and-discretion.md) contract for each standing grant: bind it to its principal, authorized executor, and acting surface; set its duration or review trigger; revalidate after material scope, target, executor, or runtime changes. Do not let a scheduled job's authorization silently expand into open-ended monitoring or capture. Continuous observation requires an explicitly authorized scope with its own purpose, sources, cadence, retention, failure visibility, and stop path.
 
 Do not automate a workflow whose manual failure and recovery are not yet understood.
 

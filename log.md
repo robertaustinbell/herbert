@@ -1,5 +1,13 @@
 # Material operating log
 
+## 2026-11-08 — Sanitized portable projection
+
+- **Change:** Updated the public `agent-prompt-design` package to v1.6.0 without copying model/provider-specific guidance, private source lineage, local runtime configuration, or principal-specific permissions. Added five portable references for result reconciliation, graph gates, interruption recovery, capability escalation, and failure patterns. Clarified complete prompt-file receipt, public source retention, source-review sampling, minimum-necessary intervention receipts, and bounded recurring-work authority tied to its executor, acting surface, and review trigger, with source/output/cadence/retention boundaries.
+- **Decision effect:** No runtime or field behavior has been measured. The projection clarifies scope and moves several detailed procedures to load-on-need references; static preservation checks do not establish improved agent judgment.
+- **Public evidence handle:** `skills/agent-prompt-design/` and its references; `evidence/README.md` (public retention boundary); `GOVERNANCE.md` → `Source ingestion`; `operating-thought/capabilities/external-capability-governance.md` → `Unattended automation`.
+- **Verification:** 158 repository tests, 58 context-trial tests, 22 authority/effect tests, generated-index freshness, and `check_template.py` passed on this checkout. Mutation tests rejected deletion, comment/fence hiding, relocation, and direct authority/coverage inversions across source retention, sampling, bounded recurring-job scope, interruption recovery, graph holds, prompt retrieval, and receipt privacy/minimization. No fresh-session behavioral or public field test was run.
+- **Boundary:** Private source lineage, private cases, credentials, and person-specific or machine-specific configuration were not copied. This record reports static verification only; publication remains subject to required human maintainer review and does not establish adopter use.
+
 ## 2026-10-17 — Local activation readability and publication-boundary repairs
 
 - **Change:** Prepared a four-part activation contract in `SOUL.md`, preserving the existing activation, changed-state re-entry, routing/application, and conditional-surfacing sentences. Clarified that code-specific procedure is adopter-installed rather than bundled. Strengthened active-section mutation guards without claiming semantic proof.

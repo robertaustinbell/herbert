@@ -28,7 +28,7 @@ review_when:
   - important operating thought is not retrieved in a real decision
   - routine work repeatedly incurs ceremony without changing the action
   - the ownership architecture cannot place a materially new artifact cleanly
-last_material_revision: 2026-07-31
+last_material_revision: 2026-11-08
 ---
 
 # Agent Ops governance
@@ -189,6 +189,8 @@ When a source appears useful:
 6. route procedure to a skill, local choice to a decision, domain fact to its source of record, and historical source material to evidence/archive;
 7. assign honest confidence and revision conditions;
 8. use it in production only inside its bounds.
+
+For broad sources, a targeted sample is an initial screen, not a full review. Label sampled and unread scope; inspect later sections and qualifications when they could change interpretation or decision effect, and keep the assessment provisional while that material remains unread.
 
 Do not preserve author names or formal vocabulary merely as prestige. Preserve source attribution when it materially affects interpretation, confidence, or scope.
 
