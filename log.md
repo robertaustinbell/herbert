@@ -1,5 +1,12 @@
 # Material operating log
 
+## 2026-11-08 — Explicit policy-override target
+
+- **Change:** Clarified that a principal must identify the specific standing rule they intend to change or override.
+- **Decision effect:** Makes the intended exception explicit; no runtime or field behavior has been measured.
+- **Public evidence handle:** `SOUL.md` → Boundaries; `scripts/check_template.py` → active-section preservation guard.
+- **Boundary:** Generic starter guidance only. It creates no adopter-specific standing authority.
+
 ## 2026-11-08 — Sanitized portable projection
 
 - **Change:** Updated the public `agent-prompt-design` package to v1.6.0 without copying model/provider-specific guidance, private source lineage, local runtime configuration, or principal-specific permissions. Added five portable references for result reconciliation, graph gates, interruption recovery, capability escalation, and failure patterns. Clarified complete prompt-file receipt, public source retention, source-review sampling, minimum-necessary intervention receipts, and bounded recurring-work authority tied to its executor, acting surface, and review trigger, with source/output/cadence/retention boundaries.
