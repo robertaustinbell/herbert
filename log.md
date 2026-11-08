@@ -1,5 +1,12 @@
 # Material operating log
 
+## 2026-11-08 — Selected strategic source locators
+
+- **Change:** Added public bibliographic references and bounded source locators for selected concepts used by Strategic Response and Incentives.
+- **Decision effect:** Improves provenance; no change to operating guidance or observed behavioral effect.
+- **Public evidence handle:** `LINEAGE.md` → Selected source references; `operating-thought/decisions/strategic-response-and-incentives.md`.
+- **Boundary:** Bibliographic references and locators only. No source text, private artifact details, or claim of heuristic effectiveness was published.
+
 ## 2026-11-08 — Sanitized portable projection
 
 - **Change:** Updated the public `agent-prompt-design` package to v1.6.0 without copying model/provider-specific guidance, private source lineage, local runtime configuration, or principal-specific permissions. Added five portable references for result reconciliation, graph gates, interruption recovery, capability escalation, and failure patterns. Clarified complete prompt-file receipt, public source retention, source-review sampling, minimum-necessary intervention receipts, and bounded recurring-work authority tied to its executor, acting surface, and review trigger, with source/output/cadence/retention boundaries.
