@@ -1843,5 +1843,168 @@ class RouterRetrievalTests(unittest.TestCase):
             self.assertIn("not in a routed family", checked.stdout)
 
 
+class SanitizedProjectionCanaryTests(CanaryHarness):
+    def assert_mutation_rejected(self, relative_path, marker, replacement, expected_diagnostic):
+        def mutate(clone):
+            path = clone / relative_path
+            text = path.read_text()
+            self.assertEqual(text.count(marker), 1)
+            path.write_text(text.replace(marker, replacement, 1))
+
+        result = self.run_copy(mutate)
+        self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn(expected_diagnostic, result.stdout)
+
+    def test_projection_log_cannot_turn_static_checks_into_behavioral_proof(self):
+        self.assert_mutation_rejected(
+            "log.md",
+            "No runtime or field behavior has been measured.",
+            "Runtime or field behavior has been demonstrated.",
+            "2026-11-08 — Sanitized portable projection",
+        )
+
+    def test_source_retention_boundary_rejects_inert_or_relocated_guidance(self):
+        marker = "Retain only the minimum necessary material"
+        placements = {
+            "delete": "",
+            "comment": f"<!-- {marker} -->",
+            "fence": f"```text\n{marker}\n```",
+            "relocate": "",
+        }
+        for placement, replacement in placements.items():
+            with self.subTest(placement=placement):
+                def mutate(clone, replacement=replacement):
+                    path = clone / "evidence/README.md"
+                    text = path.read_text()
+                    self.assertEqual(text.count(marker), 1)
+                    text = text.replace(marker, replacement, 1)
+                    if placement == "relocate":
+                        text += f"\n## Unrelated appendix\n\n{marker}\n"
+                    path.write_text(text)
+
+                result = self.run_copy(mutate)
+                self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertIn("Public source-retention boundary", result.stdout)
+
+    def test_source_review_sample_is_not_promoted_to_full_coverage(self):
+        self.assert_mutation_rejected(
+            "GOVERNANCE.md",
+            "a targeted sample is an initial screen, not a full review",
+            "a targeted sample establishes a full review",
+            "Source ingestion",
+        )
+
+    def test_private_source_retention_requires_ongoing_authority(self):
+        self.assert_mutation_rejected(
+            "evidence/README.md",
+            "Retain it privately only when a named review need, authority, source terms, privacy boundaries, and retention/disposal conditions all permit it",
+            "Retain it privately even without a named review need, authority, source terms, privacy boundaries, or retention/disposal conditions",
+            "Public source-retention boundary",
+        )
+
+    def test_recurring_scope_fails_closed_without_authorization(self):
+        self.assert_mutation_rejected(
+            "operating-thought/capabilities/external-capability-governance.md",
+            "Keep the default off when that envelope is absent.",
+            "Keep the default on when that envelope is absent.",
+            "Keep the default off when that envelope is absent",
+        )
+
+    def test_recurring_authorization_does_not_become_open_ended_capture(self):
+        self.assert_mutation_rejected(
+            "operating-thought/capabilities/external-capability-governance.md",
+            "Continuous observation requires an explicitly authorized scope",
+            "Continuous observation can inherit the scheduled job's authorization",
+            "Continuous observation requires an explicitly authorized scope",
+        )
+
+    def test_recurring_scope_clause_cannot_be_relocated_outside_its_owner(self):
+        marker = "A bounded recurring job may run without per-run approval only inside a principal-adopted standing authorization"
+
+        def mutate(clone):
+            path = clone / "operating-thought/capabilities/external-capability-governance.md"
+            text = path.read_text()
+            self.assertEqual(text.count(marker), 1)
+            text = text.replace(marker, "A recurring job needs a documented scope", 1)
+            text += f"\n## Unrelated appendix\n\n{marker}.\n"
+            path.write_text(text)
+
+        result = self.run_copy(mutate)
+        self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("Unattended automation", result.stdout)
+
+    def test_interruption_recovery_cannot_widen_original_authority(self):
+        self.assert_mutation_rejected(
+            "skills/agent-prompt-design/references/interrupted-delegation-recovery.md",
+            "Continue only through an executor that preserves the original authority and capability limits.",
+            "Continue through any available executor regardless of original authority and capability limits.",
+            "After interruption",
+        )
+
+    def test_graph_hold_and_ready_states_must_remain_consistent(self):
+        self.assert_mutation_rejected(
+            "skills/agent-prompt-design/references/multi-agent-graph-gates.md",
+            "Keep ready and hold states mutually consistent",
+            "Keep ready and hold states independent",
+            "Freshness and stop conditions",
+        )
+
+    def test_large_prompt_file_requires_chunked_complete_retrieval(self):
+        self.assert_mutation_rejected(
+            "skills/agent-prompt-design/SKILL.md",
+            "if it exceeds one retrieval window, read in bounded consecutive chunks and verify continuity",
+            "if it exceeds one retrieval window, assume the first preview is complete",
+            "2. Curate minimal sufficient context",
+        )
+
+    def test_intervention_receipts_minimize_sensitive_content(self):
+        self.assert_mutation_rejected(
+            "skills/agent-prompt-design/references/capability-escalation-and-advisor.md",
+            "Record the minimum necessary. Prefer stable identifiers and source handles to sensitive payloads; retain receipts only under authorized scope and applicable retention/disposal rules.",
+            "Record all available details, including sensitive payloads, without regard to retention policy.",
+            "Material receipt",
+        )
+
+    def test_principal_corrections_can_be_summarized_for_privacy(self):
+        self.assert_mutation_rejected(
+            "skills/agent-prompt-design/references/capability-escalation-and-advisor.md",
+            "summarize or redact sensitive payloads when exact wording is unnecessary",
+            "always quote all sensitive principal corrections exactly",
+            "Material receipt",
+        )
+
+    def test_recurring_authorization_binds_principal_executor_and_surface(self):
+        self.assert_mutation_rejected(
+            "operating-thought/capabilities/external-capability-governance.md",
+            "bind it to its principal, authorized executor, and acting surface",
+            "bind it to any available executor and acting surface",
+            "Unattended automation",
+        )
+
+    def test_recurring_authorization_has_duration_or_review_trigger(self):
+        self.assert_mutation_rejected(
+            "operating-thought/capabilities/external-capability-governance.md",
+            "set its duration or review trigger",
+            "leave its duration and review completely open-ended",
+            "Unattended automation",
+        )
+
+    def test_recurring_job_scope_keeps_sources_outputs_cadence_and_retention_bounded(self):
+        self.assert_mutation_rejected(
+            "operating-thought/capabilities/external-capability-governance.md",
+            "allowed sources, minimum necessary scope, outputs, cadence, retention or disposal condition",
+            "all available sources, unrestricted scope, outputs, cadence, and no retention condition",
+            "Unattended automation",
+        )
+
+    def test_continuous_observation_has_its_own_bounded_scope(self):
+        self.assert_mutation_rejected(
+            "operating-thought/capabilities/external-capability-governance.md",
+            "Continuous observation requires an explicitly authorized scope with its own purpose, sources, cadence, retention, failure visibility, and stop path",
+            "Continuous observation requires an explicitly authorized scope.",
+            "Unattended automation",
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
